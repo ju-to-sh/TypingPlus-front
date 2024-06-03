@@ -4,7 +4,7 @@ import "./App.css";
 function App() {
   const testMethod = () => {
     axios
-      .get(`http://localhost:3001/`)
+      .get(`https://typing-plus-api-3051815eaf4f.herokuapp.com/`)
       .then((res) => {
         if (res) {
           console.log(res.data)
