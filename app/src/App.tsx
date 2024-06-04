@@ -1,23 +1,17 @@
-import axios from "axios";
-import "./App.css";
+// import axios from "axios";
+import { ThemeProvider } from "@emotion/react";
+import { Router } from "./router/Router";
+import CssBaseline from '@mui/material/CssBaseline'
+import theme from "./theme/theme";
 
 function App() {
-  const testMethod = () => {
-    axios
-      .get(`https://typing-plus-api-3051815eaf4f.herokuapp.com/`)
-      .then((res) => {
-        if (res) {
-          console.log(res.data)
-        }
-      })
-      .catch(() => console.log("error"));
-  };
 
   return (
-    <div className="App">
-      <button onClick={() => testMethod()}>データ取得</button>
-    </div>
-  )
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router />
+    </ThemeProvider>
+  );
 }
 
 export default App;
