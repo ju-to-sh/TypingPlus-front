@@ -1,9 +1,9 @@
-import { FC } from "react"
+import { FC, memo } from "react"
 
-export const Profile: FC = () => {
+export const Profile: FC = memo(() => {
   return (
     <>
       <h2>マイページです</h2>
     </>
   )
-}
+})
