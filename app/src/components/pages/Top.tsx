@@ -5,8 +5,8 @@ import FileDownloadDoneIcon from "@mui/icons-material/FileDownloadDone";
 
 export const Top: FC = memo(() => {
   return (
-    <Box sx={{ width: "100%", minWidth: 500 }}>
-      <Stack direction="row" justifyContent="center" alignItems="center" height='100vh'>
+    <Box sx={{ minWidth: 600 }}>
+      <Stack direction="row" justifyContent="center" alignItems="center" height="100vh">
         <Box>
           <Typography variant="h3" gutterBottom>
             Typing Plus
