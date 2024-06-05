@@ -14,7 +14,7 @@ import { Games } from "../components/pages/Games";
 import { TermsOfService } from "../components/pages/TermsOfService";
 import { Page404 } from "../components/pages/Page404";
 import { memo } from "react";
-import { HeaderLayout } from "../components/template/HeaderLayout";
+import { DefaultLayout } from "../components/template/DefaultLayout";
 
 export const Router = memo(() => {
   return (
@@ -23,9 +23,9 @@ export const Router = memo(() => {
         <Route
           path="/"
           element={
-            <HeaderLayout>
+            <DefaultLayout>
               <Top />
-            </HeaderLayout>
+            </DefaultLayout>
           }
         />
         <Route path="/login" element={<Login />} />
