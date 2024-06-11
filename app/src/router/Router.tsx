@@ -37,7 +37,14 @@ export const Router = memo(() => {
             </CenterLayout>
           }
         />
-        <Route path="/signup" element={<Signup />} />
+        <Route
+          path="/signup"
+          element={
+            <CenterLayout>
+              <Signup />
+            </CenterLayout>
+          }
+        />
         <Route path="/policy" element={<PrivacyPolicy />} />
         <Route path="/term" element={<TermsOfService />} />
         <Route path="/profile" element={<Profile />} />
