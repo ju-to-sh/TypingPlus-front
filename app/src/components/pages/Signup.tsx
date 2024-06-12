@@ -1,7 +1,7 @@
-import { Box, Button, Typography, TextField, Grid } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
+import { Typography, Grid } from "@mui/material";
 import { FC, memo } from "react";
 import { Logo } from "../atoms/Logo";
+import { SignupForm } from "../organisms/form/SignupForm";
 
 export const Signup: FC = memo(() => {
   return (
@@ -11,23 +11,7 @@ export const Signup: FC = memo(() => {
         <Typography variant="h4" gutterBottom mb={5} mt={5}>
           新規登録
         </Typography>
-        <TextField fullWidth required id="outlined-required" label="ニックネーム" margin="dense" />
-        <TextField fullWidth required id="outlined-required" label="メールアドレス" margin="dense" />
-        <TextField fullWidth required id="outlined-required" label="パスワード" type="password" margin="dense" />
-        <TextField fullWidth required id="outlined-required" label="パスワード(確認)" type="password" margin="dense" />
-        <Box mt={3}></Box>
-        <Grid container justifyContent="center" columnSpacing={2}>
-          <Grid item>
-            <Button variant="contained" color="primary" component={RouterLink} to="/games">
-              登録する
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button variant="outlined" color="primary" component={RouterLink} to="/">
-              戻る
-            </Button>
-          </Grid>
-        </Grid>
+        <SignupForm />
       </Grid>
     </Grid>
   );

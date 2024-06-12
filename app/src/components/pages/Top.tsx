@@ -38,7 +38,7 @@ export const Top: FC = memo(() => {
           </Box>
         </Box>
         <Box>
-          <img width={300} height="auto" src={`${process.env.PUBLIC_URL}/top-image.png`} alt="logo" />
+          <img width={300} height="auto" src='../../images/top-image.png' alt="logo" />
         </Box>
       </Stack>
     </Box>
