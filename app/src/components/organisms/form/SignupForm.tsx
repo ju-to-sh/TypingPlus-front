@@ -3,6 +3,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { FC, memo } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
+import { useApi } from "../../../hooks/useApi";
 
 type Inputs = {
   nickname: string;
@@ -15,11 +16,15 @@ export const SignupForm: FC = memo(() => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
-    console.log(`${data.nickname},${data.email},${data.password},${data.passwordConfirmation},`);
+    useApi
+      .post("/registration", { user: data })
+      .then(() => reset())
+      .catch((error) => console.log(process.env.REACT_APP_BASE_URL));
   };
 
   return (
