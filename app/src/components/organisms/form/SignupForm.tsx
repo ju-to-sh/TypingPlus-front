@@ -1,5 +1,5 @@
 import { Box, Button, Typography, TextField, Grid, Stack } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { FC, memo } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
@@ -19,11 +19,15 @@ export const SignupForm: FC = memo(() => {
     reset,
     formState: { errors },
   } = useForm<Inputs>();
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
     useApi
       .post("/registration", { user: data })
-      .then(() => reset())
+      .then(() => {
+        reset();
+        navigate("/games", { state: { message: "ユーザー登録が完了しました" } });
+      })
       .catch((error) => console.log(process.env.REACT_APP_BASE_URL));
   };
 
