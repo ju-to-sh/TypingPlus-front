@@ -14,7 +14,7 @@ export const Top: FC = memo(() => {
           <Typography variant="subtitle1" gutterBottom>
             Ruby/Railsに特化したクイズとタイピングゲーム
           </Typography>
-          <Typography variant="body1" gutterBottom mb={2}>
+          <Box pb={2}>
             こんな方にオススメです
             <Stack mt={0.5} pl={1} direction="column" justifyContent="flex-start" spacing={1}>
               <Stack direction="row" justifyContent="flex-start" alignItems="flex-start">
@@ -30,7 +30,7 @@ export const Top: FC = memo(() => {
                 </Typography>
               </Stack>
             </Stack>
-          </Typography>
+          </Box>
           <Box textAlign="center">
             <Button variant="contained" color="primary" component={RouterLink} to="/games">
               問題を解く
@@ -38,7 +38,7 @@ export const Top: FC = memo(() => {
           </Box>
         </Box>
         <Box>
-          <img width={300} height="auto" src='../../images/top-image.png' alt="logo" />
+          <img width={300} height="auto" src="../../images/top-image.png" alt="logo" />
         </Box>
       </Stack>
     </Box>
