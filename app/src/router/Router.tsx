@@ -15,6 +15,7 @@ import { TermsOfService } from "../components/pages/TermsOfService";
 import { Page404 } from "../components/pages/Page404";
 import { memo } from "react";
 import { DefaultLayout } from "../components/template/DefaultLayout";
+import { CenterLayout } from "../components/template/CenterLayout";
 
 export const Router = memo(() => {
   return (
@@ -28,8 +29,22 @@ export const Router = memo(() => {
             </DefaultLayout>
           }
         />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route
+          path="/login"
+          element={
+            <CenterLayout>
+              <Login />
+            </CenterLayout>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <CenterLayout>
+              <Signup />
+            </CenterLayout>
+          }
+        />
         <Route path="/policy" element={<PrivacyPolicy />} />
         <Route path="/term" element={<TermsOfService />} />
         <Route path="/profile" element={<Profile />} />
