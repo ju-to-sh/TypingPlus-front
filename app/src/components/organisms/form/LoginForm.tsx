@@ -21,7 +21,6 @@ export const LoginForm: FC = memo(() => {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
-    console.log({ user: data });
     useApi
       .post("/login", data)
       .then(() => {
@@ -66,7 +65,7 @@ export const LoginForm: FC = memo(() => {
         <Box mt={3}></Box>
         <Grid container justifyContent="center" columnSpacing={2}>
           <Grid item>
-            <Button variant="contained" color="primary" type="submit" onSubmit={handleSubmit(onSubmit)}>
+            <Button variant="contained" color="primary" type="submit">
               登録する
             </Button>
           </Grid>

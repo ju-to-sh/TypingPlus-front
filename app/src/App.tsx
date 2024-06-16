@@ -1,16 +1,29 @@
 // import axios from "axios";
 import { ThemeProvider } from "@emotion/react";
 import { Router } from "./router/Router";
-import CssBaseline from '@mui/material/CssBaseline'
+import { RecoilRoot } from "recoil";
+import CssBaseline from "@mui/material/CssBaseline";
 import theme from "./theme/theme";
+import { Suspense } from "react";
+
+const Fallback = () => {
+  return (
+    <div id="load">
+      <span>Loading...</span>
+    </div>
+  )
+}
 
 function App() {
-
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Router />
-    </ThemeProvider>
+    <RecoilRoot>
+      <Suspense fallback={<Fallback />}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Router />
+        </ThemeProvider>
+      </Suspense>
+    </RecoilRoot>
   );
 }
 
