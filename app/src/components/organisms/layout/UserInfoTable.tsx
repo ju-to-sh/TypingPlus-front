@@ -17,17 +17,17 @@ export const UserInfoTable: FC = memo(() => {
       <TableBody sx={{ border: "1px solid rgba(224, 224, 224, 1)" }}>
         <TableRow>
           <TableCell sx={{ paddingTop: "0px", paddingBottom: "0px" }}>
-            <UserInfo title={'ニックネーム'} value={user.attributes.nickname} />
+            <UserInfo title={"ニックネーム"} value={user.attributes.nickname} />
           </TableCell>
         </TableRow>
         <TableRow>
           <TableCell sx={{ paddingTop: "0px", paddingBottom: "0px" }}>
-            <UserInfo title={'メールアドレス'} value={user.attributes.email}/>
+            <UserInfo title={"メールアドレス"} value={user.attributes.email} />
           </TableCell>
         </TableRow>
         <TableRow>
           <TableCell sx={{ paddingTop: "0px", paddingBottom: "0px" }}>
-            <UserInfo title={'プロフィール画像'} value={user.attributes.avatar}/>
+            <UserInfo title={"プロフィール画像"} value={user.attributes.avatar} />
           </TableCell>
         </TableRow>
       </TableBody>

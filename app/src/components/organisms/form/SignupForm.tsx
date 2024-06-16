@@ -60,7 +60,7 @@ export const SignupForm: FC = memo(() => {
       <Box mt={3}></Box>
       <Grid container justifyContent="center" columnSpacing={2}>
         <Grid item>
-          <Button variant="contained" color="primary" type="submit" onSubmit={handleSubmit(onSubmit)}>
+          <Button variant="contained" color="primary" type="submit">
             登録する
           </Button>
         </Grid>
