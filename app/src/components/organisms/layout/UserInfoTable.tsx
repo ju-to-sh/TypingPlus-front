@@ -3,7 +3,6 @@ import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material"
 import { UserInfo } from "../user/UserInfo";
 import { userInfoState } from "../../../store/userInfoState";
 import { useRecoilValue } from "recoil";
-import { UserData } from "../../../types/api/user";
 
 export const UserInfoTable: FC = memo(() => {
   const user = useRecoilValue(userInfoState);

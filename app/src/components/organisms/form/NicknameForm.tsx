@@ -35,7 +35,7 @@ export const NicknameForm: FC<Props> = memo((props) => {
 
   return (
     <Stack component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
-      <Stack>
+      <Stack mb={2}>
         <ErrorMessage errors={errors} name="nickname" render={({ message }) => <Typography color="error.main">{message}</Typography>} />
       </Stack>
       <Stack direction="row" mb={2}>
