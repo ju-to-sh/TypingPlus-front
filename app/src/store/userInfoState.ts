@@ -9,7 +9,7 @@ export const userInfoState = atom<User | any>({
     get: async ({ get }) => {
       try {
         const response = await useApi.get<User>("/user");
-        return response.data.data;
+        return response.data.data.attributes;
       } catch (error) {
         throw error;
       }

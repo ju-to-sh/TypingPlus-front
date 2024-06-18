@@ -5,6 +5,7 @@ import { ChangeEmailForm } from "../organisms/form/ChangeEmailForm";
 
 type Props = {
   heading: string;
+  messageFlag: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const style = {
@@ -20,11 +21,10 @@ const style = {
 };
 
 export const ProfileEditModal: FC<Props> = memo((props) => {
-  // const [open, setOpen] = useRecoilState(modalState);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { heading } = props;
+  const { heading, messageFlag } = props;
 
   return (
     <>
@@ -34,7 +34,7 @@ export const ProfileEditModal: FC<Props> = memo((props) => {
           <Typography variant="h6" component="h2" pb={2}>
             {heading}の変更
           </Typography>
-          {heading === "ニックネーム" && <NicknameForm onClose={handleClose} />}
+          {heading === "ニックネーム" && <NicknameForm onClose={handleClose} messageFlag={messageFlag} />}
           {heading === "メールアドレス" && <ChangeEmailForm onClose={handleClose} />}
         </Box>
       </Modal>

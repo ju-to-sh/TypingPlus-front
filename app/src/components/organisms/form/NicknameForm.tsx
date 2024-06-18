@@ -3,33 +3,41 @@ import { FC, memo } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { useApi } from "../../../hooks/useApi";
+import { useSetRecoilState } from "recoil";
+import { userInfoState } from "../../../store/userInfoState";
 
 type Input = {
-  nickname?: string;
+  nickname: string;
 };
 
 type Props = {
   onClose: () => void;
+  messageFlag: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const NicknameForm: FC<Props> = memo((props) => {
-  const { onClose } = props;
+  const { onClose, messageFlag } = props;
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm<Input>();
+  const setUser = useSetRecoilState(userInfoState);
 
-  const onSubmit: SubmitHandler<Input> = (data: Input) => {
-    useApi
-      .post("/", { user: data })
-      .then(() => {
-        reset();
-      })
-      .catch((error) => console.log(process.env.REACT_APP_BASE_URL));
-    reset();
-    onClose();
+  const onSubmit: SubmitHandler<Input> = async (data: Input) => {
+    try {
+      await useApi.patch("/user", { user: data });
+      setUser((prevUser: any) => ({
+        ...prevUser,
+        nickname: data.nickname,
+      }));
+      reset();
+      onClose();
+      messageFlag(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

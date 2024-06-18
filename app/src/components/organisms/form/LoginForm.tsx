@@ -22,8 +22,8 @@ export const LoginForm: FC = memo(() => {
   } = useForm<Inputs>();
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
-    useApi
+  const onSubmit: SubmitHandler<Inputs> = async(data: Inputs) => {
+    await useApi
       .post("/login", data)
       .then((res) => {
         const accessToken = res.headers["accesstoken"];
