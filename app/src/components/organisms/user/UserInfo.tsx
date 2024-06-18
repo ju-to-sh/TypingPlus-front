@@ -6,10 +6,11 @@ import { ProfileEditModal } from "../../molecules/ProfileEditModal";
 type Props = {
   title: string;
   value: string;
+  messageFlag: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const UserInfo: FC<Props> = memo((props) => {
-  const { title, value } = props;
+  const { title, value, messageFlag } = props;
   return (
     <Stack direction="row" alignItems="center">
       <Box width="160px" height="48px" lineHeight="48px">
@@ -17,7 +18,7 @@ export const UserInfo: FC<Props> = memo((props) => {
       </Box>
       <Stack direction="row" justifyContent="space-between" width="100%" pl={4}>
         <Typography alignContent="center">{value}</Typography>
-        <ProfileEditModal heading={title} />
+        <ProfileEditModal heading={title} messageFlag={messageFlag} />
       </Stack>
     </Stack>
   );
