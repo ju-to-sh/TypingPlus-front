@@ -4,6 +4,7 @@ import { FC, memo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { useApi } from "../../../hooks/useApi";
+import { useCookies } from "react-cookie";
 
 type Inputs = {
   email: string;
@@ -11,6 +12,7 @@ type Inputs = {
 };
 
 export const LoginForm: FC = memo(() => {
+  const [cookie, setCookie] = useCookies<string>(["accesstoken"]);
   const [loginFlag, setLoginFlag] = useState(false);
   const {
     register,
@@ -23,9 +25,13 @@ export const LoginForm: FC = memo(() => {
   const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
     useApi
       .post("/login", data)
-      .then(() => {
-        reset();
-        navigate("/games", { state: { message: "ログインしました" } });
+      .then((res) => {
+        const accessToken = res.headers["accesstoken"];
+        if (accessToken) {
+          setCookie("accesstoken", accessToken);
+          reset();
+          navigate("/games", { state: { message: "ログインしました" } });
+        }
       })
       .catch((error) => {
         setLoginFlag(true);

@@ -22,13 +22,12 @@ export const NicknameForm: FC<Props> = memo((props) => {
   } = useForm<Input>();
 
   const onSubmit: SubmitHandler<Input> = (data: Input) => {
-    // useApi
-    //   .post("/", { user: data })
-    //   .then(() => {
-    //     reset();
-    //   })
-    //   .catch((error) => console.log(process.env.REACT_APP_BASE_URL));
-    console.log("hello");
+    useApi
+      .post("/", { user: data })
+      .then(() => {
+        reset();
+      })
+      .catch((error) => console.log(process.env.REACT_APP_BASE_URL));
     reset();
     onClose();
   };
