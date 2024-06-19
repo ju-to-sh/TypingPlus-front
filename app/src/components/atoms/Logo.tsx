@@ -1,5 +1,4 @@
 import { FC, memo } from "react";
-// import { ReactComponent as Icon } from "../../assets/logo.svg";
 
 type Props = {
   width: number;
