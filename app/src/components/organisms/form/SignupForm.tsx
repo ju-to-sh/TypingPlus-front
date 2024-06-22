@@ -4,6 +4,7 @@ import { FC, memo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { useApi } from "../../../hooks/useApi";
+import { useCookies } from "react-cookie";
 
 type Inputs = {
   nickname: string;
@@ -14,6 +15,7 @@ type Inputs = {
 
 export const SignupForm: FC = memo(() => {
   const [registrationFlag, setRegistrationFlag] = useState(false);
+  const [cookie, setCookie] = useCookies<string>(["accesstoken"]);
   const {
     register,
     handleSubmit,
@@ -25,10 +27,14 @@ export const SignupForm: FC = memo(() => {
   const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
     useApi
       .post("/registration", { user: data })
-      .then(() => {
-        reset();
-        setRegistrationFlag(false);
-        navigate("/games", { state: { message: "ユーザー登録が完了しました" } });
+      .then((res) => {
+        const accessToken = res.headers["accesstoken"];
+        if (accessToken) {
+          setCookie("accesstoken", accessToken);
+          reset();
+          setRegistrationFlag(false);
+          navigate("/games", { state: { message: "ユーザー登録が完了しました" } });
+        }
       })
       .catch((error) => {
         console.log(process.env.REACT_APP_BASE_URL);
