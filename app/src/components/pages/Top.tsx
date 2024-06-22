@@ -1,12 +1,22 @@
-import { Box, Stack, Button, Typography } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
-import { FC, memo } from "react";
+import { Box, Stack, Button, Typography, Collapse, Alert } from "@mui/material";
+import { Link as RouterLink, useLocation } from "react-router-dom";
+import { FC, memo, useState } from "react";
 import FileDownloadDoneIcon from "@mui/icons-material/FileDownloadDone";
 
 export const Top: FC = memo(() => {
+  const [open, setOpen] = useState(true);
+  const location = useLocation();
+
   return (
     <Box sx={{ minWidth: 600 }}>
-      <Stack direction="row" justifyContent="center" alignItems="center" height="100vh">
+      {location.state?.message && (
+        <Collapse in={open}>
+          <Alert severity="success" onClose={() => setOpen(false)}>
+            {location.state.message}
+          </Alert>
+        </Collapse>
+      )}
+      <Stack direction="row" justifyContent="center" alignItems="center" height={"calc(100vh - 185px)"}>
         <Box>
           <Typography variant="h3" gutterBottom>
             Typing Plus
