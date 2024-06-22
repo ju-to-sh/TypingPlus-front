@@ -2,6 +2,7 @@ import { Box, Button, Modal, Typography } from "@mui/material";
 import { FC, memo, useState } from "react";
 import { NicknameForm } from "../organisms/form/NicknameForm";
 import { ChangeEmailForm } from "../organisms/form/ChangeEmailForm";
+import { ProfileImageForm } from "../organisms/form/ProfileImageForm";
 
 type Props = {
   heading: string;
@@ -16,8 +17,8 @@ const style = {
   width: 500,
   bgcolor: "background.paper",
   boxShadow: 24,
-  p: 4,
   textAlign: "center",
+  p: "24px",
 };
 
 export const ProfileEditModal: FC<Props> = memo((props) => {
@@ -36,6 +37,7 @@ export const ProfileEditModal: FC<Props> = memo((props) => {
           </Typography>
           {heading === "ニックネーム" && <NicknameForm onClose={handleClose} messageFlag={messageFlag} />}
           {heading === "メールアドレス" && <ChangeEmailForm onClose={handleClose} />}
+          {heading === "プロフィール画像" && <ProfileImageForm onClose={handleClose} messageFlag={messageFlag} />}
         </Box>
       </Modal>
     </>

@@ -18,7 +18,7 @@ export const UserInfoTable: FC = memo(() => {
     <>
       <Snackbar
         open={open}
-        autoHideDuration={3000}
+        autoHideDuration={1000}
         onClose={handleClose}
         anchorOrigin={{
           vertical: "top",
@@ -26,7 +26,7 @@ export const UserInfoTable: FC = memo(() => {
         }}
       >
         <Alert onClose={handleClose} severity="success">
-          This is a success message!
+          変更が完了しました
         </Alert>
       </Snackbar>
       <Table sx={{ maxWidth: 600, minWidth: 360 }}>
@@ -48,7 +48,11 @@ export const UserInfoTable: FC = memo(() => {
           </TableRow>
           <TableRow>
             <TableCell sx={{ paddingTop: "0px", paddingBottom: "0px" }}>
-              <UserInfo title={"プロフィール画像"} value={user.avatar} messageFlag={setOpen} />
+              {user.avatar.url ? (
+                <UserInfo title={"プロフィール画像"} value={user.avatar.url.slice(user.avatar.url.lastIndexOf("/") + 1)} messageFlag={setOpen} />
+              ) : (
+                <UserInfo title={"プロフィール画像"} value={user.avatar.url} messageFlag={setOpen} />
+              )}
             </TableCell>
           </TableRow>
         </TableBody>

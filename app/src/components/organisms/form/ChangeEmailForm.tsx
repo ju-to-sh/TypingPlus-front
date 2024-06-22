@@ -42,7 +42,7 @@ export const ChangeEmailForm: FC<Props> = memo((props) => {
       </Stack>
       <Stack direction="row" mb={2} textAlign="left">
         <Typography width="300px">現在のメールアドレス</Typography>
-        <Typography width="380px">{user.attributes.email}</Typography>
+        <Typography width="380px">{user.email}</Typography>
       </Stack>
       <Stack direction="row">
         <Typography width="300px" lineHeight="56px" textAlign="left">
