@@ -22,7 +22,7 @@ export const LoginForm: FC = memo(() => {
   } = useForm<Inputs>();
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<Inputs> = async(data: Inputs) => {
+  const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
     await useApi
       .post("/login", data)
       .then((res) => {
@@ -72,7 +72,7 @@ export const LoginForm: FC = memo(() => {
         <Grid container justifyContent="center" columnSpacing={2}>
           <Grid item>
             <Button variant="contained" color="primary" type="submit">
-              登録する
+              ログイン
             </Button>
           </Grid>
           <Grid item>
