@@ -5,7 +5,7 @@ import { Logo } from "../../atoms/Logo";
 
 export const Header: FC = memo(() => {
   return (
-    <AppBar component="header" position="fixed" style={{ backgroundColor: "#ffeded", borderBottom: "3px solid #c52f24" }}>
+    <AppBar component="header" position="fixed" style={{ backgroundColor: "#ffeded", borderBottom: "2px solid #c52f24" }}>
       <Box mt={1} mr={2} ml={2}>
         <Stack direction="row" justifyContent="space-between" alignItems="center">
           <Logo width={220} />

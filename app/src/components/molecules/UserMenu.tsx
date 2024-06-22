@@ -6,16 +6,29 @@ import PersonIcon from "@mui/icons-material/Person";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Link as RouterLink } from "react-router-dom";
 import { Link } from "@mui/material";
+import { useCookies } from "react-cookie";
+import { useApi } from "../../hooks/useApi";
+import { useNavigate } from "react-router-dom";
 
 export const UserMenu: FC = memo(() => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const [cookies, setCookie, removeCookie] = useCookies(["accesstoken"]);
+  const navigate = useNavigate();
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const LogoutHandler = async () => {
+    await useApi.post("/logout");
+    removeCookie("accesstoken");
+    setAnchorEl(null);
+    navigate("/", { state: { message: "ログアウトしました" } });
+  };
+
   return (
     <>
       <Button id="basic-button" aria-controls={open ? "basic-menu" : undefined} aria-haspopup="true" aria-expanded={open ? "true" : undefined} onClick={handleClick}>
@@ -37,7 +50,7 @@ export const UserMenu: FC = memo(() => {
             マイページ
           </Link>
         </MenuItem>
-        <MenuItem onClick={handleClose}>ログアウト</MenuItem>
+        <MenuItem onClick={LogoutHandler}>ログアウト</MenuItem>
       </Menu>
     </>
   );
