@@ -1,7 +1,7 @@
 export type UserAttributes = {
   nickname: string;
   email: string;
-  avatar: string;
+  avatar?: { url: string | null };
 };
 
 export type UserData = {

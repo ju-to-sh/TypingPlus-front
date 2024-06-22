@@ -5,6 +5,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useApi } from "../../../hooks/useApi";
 import { useSetRecoilState } from "recoil";
 import { userInfoState } from "../../../store/userInfoState";
+import { UserAttributes } from "../../../types/api/user";
 
 type Input = {
   nickname: string;
@@ -28,7 +29,7 @@ export const NicknameForm: FC<Props> = memo((props) => {
   const onSubmit: SubmitHandler<Input> = async (data: Input) => {
     try {
       await useApi.patch("/user", { user: data });
-      setUser((prevUser: any) => ({
+      setUser((prevUser: UserAttributes) => ({
         ...prevUser,
         nickname: data.nickname,
       }));
