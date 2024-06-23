@@ -1,4 +1,4 @@
-import { Step, StepLabel, Stepper } from "@mui/material";
+import { Stack, Step, StepLabel, Stepper } from "@mui/material";
 import { FC, ReactNode, memo } from "react";
 import { useRecoilValue } from "recoil";
 import { questionStepState } from "../../../store/questionStepState";
