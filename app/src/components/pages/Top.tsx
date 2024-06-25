@@ -16,7 +16,7 @@ export const Top: FC = memo(() => {
           </Alert>
         </Collapse>
       )}
-      <Stack direction="row" justifyContent="center" alignItems="center" height={"calc(100vh - 185px)"}>
+      <Stack direction="row" justifyContent="center" alignItems="center" height={"calc(100vh - 170px)"}>
         <Box>
           <Typography variant="h3" gutterBottom>
             Typing Plus
