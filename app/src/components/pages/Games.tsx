@@ -9,7 +9,7 @@ export const Games: FC = memo(() => {
   const [open, setOpen] = useState(true);
   const location = useLocation();
   return (
-    <Stack direction="column" justifyContent="center" alignItems="center" height={"calc(100vh - 185px)"}>
+    <Stack direction="column" justifyContent="center" alignItems="center" height={"calc(100vh - 170px)"}>
       {location.state?.message && (
         <Collapse in={open}>
           <Alert severity="success" onClose={() => setOpen(false)}>

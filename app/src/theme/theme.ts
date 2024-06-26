@@ -13,6 +13,17 @@ const theme = createTheme({
     },
     text: { primary: "#333333" },
   },
+  components: {
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          "@media (min-width: 900px)": {
+            maxWidth: "1000px",
+          },
+        },
+      },
+    },
+  },
 });
 
 export default theme;
