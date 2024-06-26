@@ -4,7 +4,7 @@ import { Login } from "../components/pages/Login";
 import { PrivacyPolicy } from "../components/pages/PrivacyPolicy";
 import { Profile } from "../components/pages/Profile";
 import { Question } from "../components/pages/Question";
-import { QuestionList } from "../components/pages/QuestionList";
+import { GameList } from "../components/pages/GameList";
 import { Signup } from "../components/pages/Signup";
 import { Typing } from "../components/pages/Typing";
 import { TypingResult } from "../components/pages/TypingResult";
@@ -58,10 +58,10 @@ export const Router = memo(() => {
         />
         <Route path="/question" element={<Question />} />
         <Route
-          path="/question_list"
+          path="/game_list"
           element={
             <DefaultLayout>
-              <QuestionList />
+              <GameList />
             </DefaultLayout>
           }
         />

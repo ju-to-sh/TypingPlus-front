@@ -6,7 +6,7 @@ export type UserAttributes = {
 
 export type UserData = {
   id: string;
-  type: "user";
+  type: string;
   attributes: UserAttributes;
 };
 
