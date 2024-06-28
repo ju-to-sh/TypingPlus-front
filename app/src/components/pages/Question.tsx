@@ -1,4 +1,4 @@
-import { FC, memo, useEffect, useState } from "react";
+import { FC, memo, useState } from "react";
 import { LinearStepper } from "../organisms/common/LinearStepper";
 import { Box, Button, Grid } from "@mui/material";
 import { QuestionButton } from "../molecules/QuestionButton";
@@ -18,8 +18,8 @@ export const Question: FC = memo(() => {
         <Grid item xs={8} textAlign="center" mb={5}>
           <LinearStepper />
         </Grid>
-        <Grid item width="100%" minHeight="200px" textAlign="left" bgcolor="#F1938C" color="#fff" p={5} fontSize={{ sm: "16px", md: "20px" }} mb={5}>
-          {quizState[quizIndex].attributes.content}
+        <Grid item width="100%" minHeight="200px" textAlign="left" bgcolor="#F1938C" color="#fff" p={4} fontSize={{ xs: "16px", md: "18px" }} mb={5}>
+          <pre style={{ whiteSpace: "pre-wrap" }}>{quizState[quizIndex].attributes.content}</pre>
         </Grid>
         <Grid item xs={12} textAlign="center" pb={5}>
           {quizState[quizIndex].attributes.quiz_choices.map((choice: QuizChoiceAttributes, index: number) => (
@@ -37,6 +37,7 @@ export const Question: FC = memo(() => {
                   color: "#fff",
                   backgroundColor: "#F1938C",
                 },
+                textAlign: "left",
               }}
             >
               {`${index + 1}: ${choice.content}`}

@@ -24,7 +24,7 @@ export const QuizCard: FC<Props> = memo((props) => {
         <Typography variant="body2">{content}</Typography>
       </CardContent>
       <CardActions sx={{ padding: "0 16px", justifyContent: "center" }}>
-        <Button variant="contained" color="primary" component={RouterLink} to={`/question/${id}`}>
+        <Button variant="contained" color="primary" component={RouterLink} to={`/quizzes/${id}`}>
           問題を解く
         </Button>
       </CardActions>
