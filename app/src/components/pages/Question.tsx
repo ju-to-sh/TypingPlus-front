@@ -1,25 +1,30 @@
-import { FC, memo } from "react";
+import { FC, memo, useState } from "react";
 import { LinearStepper } from "../organisms/common/LinearStepper";
 import { Box, Button, Grid } from "@mui/material";
-import { QuestionButton } from "../molecules/questionButton";
-
-const choices: Array<string> = ["ipsum dolor sit ametfdfsfddf", "選択肢b", "選択肢c", "選択肢d"];
+import { QuestionButton } from "../molecules/QuestionButton";
+import { useRecoilValue } from "recoil";
+import { QuizState } from "../../store/quizState";
+import { QuizChoiceAttributes } from "../../types/api/quiz";
+import { useParams } from "react-router-dom";
 
 export const Question: FC = memo(() => {
+  const param = useParams();
+  const quizState = useRecoilValue(QuizState({ id: param.id }));
+  const [quizIndex, setQuizIndex] = useState(0);
+
+  const handleQuizIndexChange = (newNumber: number) => setQuizIndex(newNumber);
+
   return (
     <Box sx={{ display: "flex", alignItems: "center", height: "100vh" }}>
       <Grid container direction="row" sx={{ minWidth: 600, maxWidth: 1000 }} margin="0 auto" justifyContent="center" alignItems="center" p={3}>
         <Grid item xs={8} textAlign="center" mb={5}>
           <LinearStepper />
         </Grid>
-        <Grid item width="100%" minHeight="200px" textAlign="left" bgcolor="#F1938C" color="#fff" p={5} fontSize={{ sm: "16px", md: "20px" }} mb={5}>
-          ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim venia ipsum dolor sit amet, consectetur adipiscing
-          elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim venia ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-          et dolore magna aliqua. Ut enim ad minim venia ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim venia
-          ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim venia
+        <Grid item width="100%" minHeight="200px" textAlign="left" bgcolor="#F1938C" color="#fff" p={4} fontSize={{ xs: "16px", md: "18px" }} mb={5}>
+          <pre style={{ whiteSpace: "pre-wrap" }}>{quizState[quizIndex].attributes.content}</pre>
         </Grid>
         <Grid item xs={12} textAlign="center" pb={5}>
-          {choices.map((choice, index) => (
+          {quizState[quizIndex].attributes.quiz_choices.map((choice: QuizChoiceAttributes, index: number) => (
             <Button
               key={index}
               size="large"
@@ -34,14 +39,15 @@ export const Question: FC = memo(() => {
                   color: "#fff",
                   backgroundColor: "#F1938C",
                 },
+                textAlign: "left",
               }}
             >
-              {`${index + 1}: ${choice}`}
+              {`${index + 1}: ${choice.content}`}
             </Button>
           ))}
         </Grid>
         <Grid item xs={10} textAlign="center">
-          <QuestionButton />
+          <QuestionButton quizIndex={quizIndex} setQuizIndex={handleQuizIndexChange} />
         </Grid>
       </Grid>
     </Box>

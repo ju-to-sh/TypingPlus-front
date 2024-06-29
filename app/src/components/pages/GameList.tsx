@@ -18,7 +18,7 @@ export const GameList: FC = memo(() => {
         <Grid item sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap",  }}>
           {gameLists.map((gameList: GameListData) => (
             <Box key={gameList.id} p={1}>
-              <QuizCard title={gameList.attributes.title} content={gameList.attributes.content} category={gameList.attributes.category} level={gameList.attributes.level} />
+              <QuizCard id={gameList.id} title={gameList.attributes.title} content={gameList.attributes.content} category={gameList.attributes.category} level={gameList.attributes.level} />
             </Box>
           ))}
         </Grid>
