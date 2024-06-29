@@ -5,13 +5,15 @@ import { QuestionButton } from "../molecules/QuestionButton";
 import { useRecoilValue } from "recoil";
 import { QuizState } from "../../store/quizState";
 import { QuizChoiceAttributes } from "../../types/api/quiz";
+import { useParams } from "react-router-dom";
 
 export const Question: FC = memo(() => {
-  const quizState = useRecoilValue(QuizState);
+  const param = useParams();
+  const quizState = useRecoilValue(QuizState({ id: param.id }));
   const [quizIndex, setQuizIndex] = useState(0);
 
   const handleQuizIndexChange = (newNumber: number) => setQuizIndex(newNumber);
-  console.log(quizIndex);
+
   return (
     <Box sx={{ display: "flex", alignItems: "center", height: "100vh" }}>
       <Grid container direction="row" sx={{ minWidth: 600, maxWidth: 1000 }} margin="0 auto" justifyContent="center" alignItems="center" p={3}>
