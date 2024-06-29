@@ -7,7 +7,7 @@ import { GameListAttributes } from "../../types/api/gameList";
 export const Category: FC<Pick<GameListAttributes, "category" | "level">> = memo((props) => {
   const { category, level } = props;
   const MAXLEVEL = 5;
-  console.log(level);
+
   return (
     <List sx={{ maxWidth: 180, display: "flex", justifyContent: "left", alignItems: "center", margin: "left" }}>
       <ListItem sx={{ padding: 0 }}>

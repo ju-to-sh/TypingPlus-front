@@ -51,3 +51,8 @@ export type QuizChoiceRelationships = {
 export type QuizChoiceRelationshipsData = {
   data: TypeData;
 };
+
+export type Answer = {
+  quizId: string;
+  selectAnswer: string;
+};
