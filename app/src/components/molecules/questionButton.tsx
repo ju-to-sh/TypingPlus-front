@@ -1,9 +1,11 @@
-import { Dispatch, FC, SetStateAction, memo, useCallback, useEffect } from "react";
+import { FC, memo, useCallback, useEffect } from "react";
 import { Box, Button } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { questionStepState } from "../../store/questionStepState";
 import { Answer } from "../../types/api/quiz";
+import { useApi } from "../../hooks/useApi";
+import _ from "lodash";
 
 type Props = {
   setQuizIndex: (number: number) => void;
@@ -22,7 +24,16 @@ export const QuestionButton: FC<Props> = memo((props) => {
     setActiveStep((prevActiveStep: number) => prevActiveStep + 1);
     answers[quizIndex + 1] ? setValue(answers[quizIndex + 1].selectAnswer) : setValue("");
   };
-  const handleResult = () => setActiveStep((prevActiveStep: number) => prevActiveStep + 1);
+  const handleResult = () => {
+    const snakeCasedAnswers = answers.map((answer) => _.mapKeys(answer, (value, key: string) => _.snakeCase(key)));
+    useApi
+      .post("/quiz_results", { quiz_result: snakeCasedAnswers })
+      .then((res) => {
+        sessionStorage.clear();
+        sessionStorage.setItem("quiz_results", JSON.stringify(res.data[0]));
+      })
+      .catch((error) => console.log(error));
+  };
   const handleBack = () => {
     setQuizIndex(quizIndex - 1);
     setActiveStep((prevActiveStep: number) => prevActiveStep - 1);
@@ -46,7 +57,7 @@ export const QuestionButton: FC<Props> = memo((props) => {
         前
       </Button>
       {quizIndex === NumberOfQuestions - 1 ? (
-        <Button variant="contained" color="primary" component={RouterLink} to="/question_result">
+        <Button variant="contained" color="primary" onClick={handleResult} component={RouterLink} to="/quiz_results">
           結果を見る
         </Button>
       ) : (

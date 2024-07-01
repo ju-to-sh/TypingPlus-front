@@ -32,8 +32,7 @@ export const Question: FC = memo(() => {
   const handleRadioChange = (e: any) => {
     setValue(e.target.value);
   };
-  console.log(answers);
-  console.log(value);
+
   return (
     <Box sx={{ display: "flex", alignItems: "center", height: "100vh" }}>
       <Grid container direction="row" sx={{ minWidth: 600, maxWidth: 1000 }} margin="0 auto" justifyContent="center" alignItems="center" p={3}>
@@ -45,7 +44,7 @@ export const Question: FC = memo(() => {
         </Grid>
         <Grid item xs={12} textAlign="center" pb={5}>
           <FormControl>
-            <RadioGroup aria-labelledby="demo-controlled-radio-buttons-group" name="controlled-radio-buttons-group" value={value} onChange={handleRadioChange}>
+            <RadioGroup aria-labelledby="demo-controlled-radio-buttons-group" name="quiz_result" value={value} onChange={handleRadioChange}>
               {quizState[quizIndex].attributes.quiz_choices.map((choice: QuizChoiceAttributes, index: any) => (
                 <FormControlLabel
                   key={index}
