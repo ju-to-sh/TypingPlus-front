@@ -1,6 +1,6 @@
 import { FC, memo, useCallback, useEffect } from "react";
 import { Box, Button } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useParams } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { questionStepState } from "../../store/questionStepState";
 import { Answer } from "../../types/api/quiz";
@@ -17,6 +17,7 @@ type Props = {
 const NumberOfQuestions = 5;
 
 export const QuestionButton: FC<Props> = memo((props) => {
+  const param = useParams();
   const { quizIndex, setQuizIndex, setValue, answers } = props;
   const setActiveStep = useSetRecoilState(questionStepState);
   const handleNext = () => {
@@ -57,7 +58,7 @@ export const QuestionButton: FC<Props> = memo((props) => {
         前
       </Button>
       {quizIndex === NumberOfQuestions - 1 ? (
-        <Button variant="contained" color="primary" onClick={handleResult} component={RouterLink} to="/quiz_results">
+        <Button variant="contained" color="primary" onClick={handleResult} component={RouterLink} to={`/quiz_results/${param.id}`}>
           結果を見る
         </Button>
       ) : (
