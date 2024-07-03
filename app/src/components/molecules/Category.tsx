@@ -6,6 +6,8 @@ import { GameListAttributes } from "../../types/api/gameList";
 
 export const Category: FC<Pick<GameListAttributes, "category" | "level">> = memo((props) => {
   const { category, level } = props;
+  const MAXLEVEL = 5;
+
   return (
     <List sx={{ maxWidth: 180, display: "flex", justifyContent: "left", alignItems: "center", margin: "left" }}>
       <ListItem sx={{ padding: 0 }}>
@@ -15,6 +17,9 @@ export const Category: FC<Pick<GameListAttributes, "category" | "level">> = memo
         </Box>
         <ListItemIcon>
           {[...Array(level)].map((_, index) => (
+            <StarIcon key={index} sx={{ width: "20px", height: "20px" }} />
+          ))}
+          {[...Array(MAXLEVEL - level)].map((_, index) => (
             <StarBorderIcon key={index} sx={{ width: "20px", height: "20px" }} />
           ))}
         </ListItemIcon>
