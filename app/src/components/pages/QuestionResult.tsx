@@ -3,7 +3,7 @@ import { FC, memo } from "react";
 import { useRecoilValue } from "recoil";
 import { quizResultState } from "../../store/quizResultState";
 import { QuizState } from "../../store/quizState";
-import { useParams } from "react-router-dom";
+import { Link as RouterLink, useParams } from "react-router-dom";
 import { QuizChoiceAttributes, QuizResuls } from "../../types/api/quiz";
 
 export const QuestionResult: FC = memo(() => {
@@ -24,7 +24,7 @@ export const QuestionResult: FC = memo(() => {
   const correctAnswersCount: number = JudgeArray.filter((answer) => answer).length;
 
   return (
-    <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", overflow: "scroll" }}>
+    <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", overflow: "scroll", position: "relative" }}>
       <Grid container direction="row" sx={{ minWidth: 600, maxWidth: 1000 }} margin="0 auto" justifyContent="center" alignItems="center" p={3}>
         <Grid item xs={12} textAlign="center" mb="20px">
           <Typography variant="h5" gutterBottom>
@@ -51,6 +51,11 @@ export const QuestionResult: FC = memo(() => {
           </Stack>
         </Grid>
       </Grid>
+      <Box sx={{ position: "fixed", bottom: "40px", right: "40px" }}>
+        <Button variant="contained" color="primary" component={RouterLink} to="/game_list">
+          問題一覧へ
+        </Button>
+      </Box>
     </Box>
   );
 });
