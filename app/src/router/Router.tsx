@@ -66,7 +66,7 @@ export const Router = memo(() => {
           }
         />
         <Route path="/quiz_results/:id" element={<QuestionResult />} />
-        <Route path="/typing" element={<Typing />} />
+        <Route path="/typing_games/:id" element={<Typing />} />
         <Route path="/typing_list" element={<TypingList />} />
         <Route path="/typing_result" element={<TypingResult />} />
         <Route path="*" element={<Page404 />} />
