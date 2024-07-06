@@ -1,9 +1,10 @@
-import { FC, memo, useState } from "react";
+import { FC, memo, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useRecoilValue, useRecoilState } from "recoil";
+import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 import { typingState } from "../../../store/typingState";
 import { typingInfoState } from "../../../store/typingInfoState";
 import { Typography } from "@mui/material";
+import { questionStepState } from "../../../store/questionStepState";
 
 export const TypingQuestion: FC = memo(() => {
   const param = useParams();
@@ -13,6 +14,7 @@ export const TypingQuestion: FC = memo(() => {
   const [typingString, setTypingString] = useState(typingGames[questionIndex]);
   const [typingInfo, setTypingInfo] = useRecoilState(typingInfoState);
   const [inputValue, setInputValue] = useState("");
+  const setActiveStep = useSetRecoilState(questionStepState);
 
   const handleKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (typingInfo.finished) return;
@@ -36,7 +38,13 @@ export const TypingQuestion: FC = memo(() => {
           ...prev,
           finished: true,
         }));
-        console.log("hello");
+        setActiveStep((prevActiveStep: number) => prevActiveStep + 1);
+        setQuestionIndex((prev) => prev + 1);
+        setCurrentIndex(0);
+        setTypingInfo((prev) => ({
+          ...prev,
+          finished: false,
+        }));
         alert(`ミスタイプ：${typingInfo.missCount}`);
         // 画面遷移処理
       }
@@ -49,7 +57,10 @@ export const TypingQuestion: FC = memo(() => {
         }));
     }
   };
-
+  console.log(typingString.attributes.content[currentIndex]);
+  useEffect(() => {
+    setTypingString(typingGames[questionIndex]);
+  }, [questionIndex, typingGames]);
   return (
     <div onKeyDown={(e) => handleKey(e)} tabIndex={0}>
       <Typography component="div" display="inline" color="green" sx={{ whiteSpace: "pre-wrap" }}>
