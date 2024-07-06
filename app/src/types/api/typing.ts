@@ -15,5 +15,4 @@ export type Typing = {
 export type TypingInfo = {
   isMissType: boolean;
   missCount: number;
-  finished: boolean
 };

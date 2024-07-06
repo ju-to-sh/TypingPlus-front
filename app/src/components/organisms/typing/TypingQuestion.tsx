@@ -1,5 +1,5 @@
 import { FC, memo, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 import { typingState } from "../../../store/typingState";
 import { typingInfoState } from "../../../store/typingInfoState";
@@ -7,6 +7,7 @@ import { Typography } from "@mui/material";
 import { questionStepState } from "../../../store/questionStepState";
 
 export const TypingQuestion: FC = memo(() => {
+  const navigate = useNavigate();
   const param = useParams();
   const typingGames = useRecoilValue(typingState({ id: param.id }));
   const [questionIndex, setQuestionIndex] = useState(0);
@@ -16,37 +17,38 @@ export const TypingQuestion: FC = memo(() => {
   const [inputValue, setInputValue] = useState("");
   const setActiveStep = useSetRecoilState(questionStepState);
 
-  const handleKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (typingInfo.finished) return;
+  const ChangeKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
     let newValue = inputValue;
 
     if (e.key === "Enter") {
       newValue = "\n";
+    } else if (e.key === "Tab") {
+      newValue = "\t";
     } else if (e.key.length === 1) {
       newValue = e.key;
     }
     setInputValue(newValue);
+    return newValue;
+  };
 
-    if (newValue === typingString.attributes.content[currentIndex]) {
+  const handleKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    if (questionIndex === 4) {
+      navigate("/typing_results/:id");
+    }
+    let inputkey = ChangeKey(e);
+
+    if (inputkey === typingString.attributes.content[currentIndex]) {
       setTypingInfo((prev) => ({
         ...prev,
         isMissType: false,
       }));
-      setCurrentIndex(currentIndex + newValue.length);
+      setCurrentIndex(currentIndex + inputkey.length);
       if (currentIndex + 1 >= typingString.attributes.content.length) {
-        setTypingInfo((prev) => ({
-          ...prev,
-          finished: true,
-        }));
         setActiveStep((prevActiveStep: number) => prevActiveStep + 1);
         setQuestionIndex((prev) => prev + 1);
         setCurrentIndex(0);
-        setTypingInfo((prev) => ({
-          ...prev,
-          finished: false,
-        }));
         alert(`ミスタイプ：${typingInfo.missCount}`);
-        // 画面遷移処理
       }
     } else {
       if (e.key !== "Shift")
@@ -57,7 +59,7 @@ export const TypingQuestion: FC = memo(() => {
         }));
     }
   };
-  console.log(typingString.attributes.content[currentIndex]);
+  
   useEffect(() => {
     setTypingString(typingGames[questionIndex]);
   }, [questionIndex, typingGames]);
@@ -72,7 +74,7 @@ export const TypingQuestion: FC = memo(() => {
         </Typography>
       ) : (
         <Typography display="inline" color="black">
-          {typingString.attributes.content[currentIndex]}
+          {typingString.attributes.content[currentIndex].replace(/\n/g, "↵").replace(/\t/g, "→")}
         </Typography>
       )}
       <Typography component="div" display="inline" sx={{ whiteSpace: "pre-wrap" }}>

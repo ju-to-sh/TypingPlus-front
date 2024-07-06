@@ -6,6 +6,5 @@ export const typingInfoState = atom<TypingInfo>({
   default: {
   isMissType: false,
   missCount: 0,
-  finished: false
   }
 });
