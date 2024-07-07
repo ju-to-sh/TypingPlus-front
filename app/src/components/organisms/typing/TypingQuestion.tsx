@@ -31,6 +31,15 @@ export const TypingQuestion: FC = memo(() => {
     return newValue;
   };
 
+  const StringJudge = (string: string): boolean => {
+    const regex = /[A-Z!@#$%^&*()~_+{}|:"<>?]/;
+    if (string.match(regex)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  console.log(typingString.attributes.content[currentIndex]);
   const handleKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
     e.preventDefault();
     if (questionIndex === 4) {
@@ -51,12 +60,20 @@ export const TypingQuestion: FC = memo(() => {
         alert(`ミスタイプ：${typingInfo.missCount}`);
       }
     } else {
-      if (e.key !== "Shift")
+      if (!StringJudge(typingString.attributes.content[currentIndex])) {
         setTypingInfo((prev) => ({
           ...prev,
           isMissType: true,
           missCount: prev.missCount + 1,
         }));
+      } else {
+        if (e.key !== "Shift")
+          setTypingInfo((prev) => ({
+            ...prev,
+            isMissType: true,
+            missCount: prev.missCount + 1,
+          }));
+      }
     }
   };
 
