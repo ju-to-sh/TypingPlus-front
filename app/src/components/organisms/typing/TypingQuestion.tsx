@@ -5,6 +5,8 @@ import { typingState } from "../../../store/typingState";
 import { typingInfoState } from "../../../store/typingInfoState";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { questionStepState } from "../../../store/questionStepState";
+import { useStopwatch } from "react-timer-hook";
+import { TypingData } from "../../../types/api/typing";
 
 export const TypingQuestion: FC = memo(() => {
   const navigate = useNavigate();
@@ -15,6 +17,8 @@ export const TypingQuestion: FC = memo(() => {
   const [typingString, setTypingString] = useState(typingGames[questionIndex]);
   const [typingInfo, setTypingInfo] = useRecoilState(typingInfoState);
   const [inputValue, setInputValue] = useState("");
+  const [totalLength, setTotalLength] = useState(0);
+  const { totalSeconds, isRunning, start, pause, reset } = useStopwatch();
   const setActiveStep = useSetRecoilState(questionStepState);
 
   const ChangeKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -39,10 +43,15 @@ export const TypingQuestion: FC = memo(() => {
       return false;
     }
   };
-  console.log(typingString.attributes.content[currentIndex]);
+
+  const CPM = (seconds: number, length: number) => length / (seconds / 60);
+
   const handleKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
     e.preventDefault();
+    !isRunning && start();
     if (questionIndex === 4) {
+      pause();
+      alert(`ミスタイプ：${typingInfo.missCount} CPM:${CPM(totalSeconds, typingGames[questionIndex].attributes.content.length)}`);
       navigate("/typing_results/:id");
     }
     let inputkey = ChangeKey(e);
@@ -54,10 +63,10 @@ export const TypingQuestion: FC = memo(() => {
       }));
       setCurrentIndex(currentIndex + inputkey.length);
       if (currentIndex + 1 >= typingString.attributes.content.length) {
+        pause();
         setActiveStep((prevActiveStep: number) => prevActiveStep + 1);
         setQuestionIndex((prev) => prev + 1);
         setCurrentIndex(0);
-        alert(`ミスタイプ：${typingInfo.missCount}`);
       }
     } else {
       if (!StringJudge(typingString.attributes.content[currentIndex])) {
@@ -82,14 +91,28 @@ export const TypingQuestion: FC = memo(() => {
     setQuestionIndex(0);
     setInputValue("");
     setActiveStep(0);
+    reset();
+    isRunning && pause();
   };
-
+  
   useEffect(() => {
     setTypingString(typingGames[questionIndex]);
   }, [questionIndex, typingGames]);
+
+  useEffect(() => {
+    let total: number = 0;
+    typingGames.map((game: TypingData) => (total += game.attributes.content.length));
+    setTotalLength(total);
+  }, []);
+
   return (
     <>
-      <Grid item width="100%" textAlign="left" bgcolor="#F1938C" color="#fff" p={4} mb={5}>
+      {questionIndex === 0 && (
+        <Typography fontWeight="bold" fontSize="18px" component="div" display="inline" color="#c52f24">
+          英文をクリックするとスタートできます
+        </Typography>
+      )}
+      <Grid item width="100%" textAlign="left" bgcolor="#F1938C" color="#fff" p={4} mb={2}>
         <Box width="80%" onKeyDown={(e) => handleKey(e)} tabIndex={0} min-height="200px" sx={{ outline: "none", xs: "24px" }} m="0 auto">
           <Typography display="inline" sx={{ color: "#689f38", whiteSpace: "pre-wrap", fontSize: { xs: "24px", md: "28px" } }}>
             {typingString.attributes.content.slice(0, currentIndex)}
@@ -108,6 +131,9 @@ export const TypingQuestion: FC = memo(() => {
           </Typography>
         </Box>
       </Grid>
+      <Box width="100%" textAlign="center" mb={2}>
+        <Typography>合計:{totalSeconds}</Typography>
+      </Box>
       <Button variant="contained" color="primary" onClick={ResetAll}>
         やり直す
       </Button>
