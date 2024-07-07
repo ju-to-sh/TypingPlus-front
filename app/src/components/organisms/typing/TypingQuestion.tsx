@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 import { typingState } from "../../../store/typingState";
 import { typingInfoState } from "../../../store/typingInfoState";
-import { Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { questionStepState } from "../../../store/questionStepState";
 
 export const TypingQuestion: FC = memo(() => {
@@ -89,24 +89,24 @@ export const TypingQuestion: FC = memo(() => {
   }, [questionIndex, typingGames]);
   return (
     <>
-      <Grid item width="100%" minHeight="200px" textAlign="left" bgcolor="#F1938C" color="#fff" p={4} fontSize={{ xs: "16px", md: "18px" }} mb={5}>
-        <div onKeyDown={(e) => handleKey(e)} tabIndex={0}>
-          <Typography component="div" display="inline" color="green" sx={{ whiteSpace: "pre-wrap" }}>
+      <Grid item width="100%" textAlign="left" bgcolor="#F1938C" color="#fff" p={4} mb={5}>
+        <Box width="80%" onKeyDown={(e) => handleKey(e)} tabIndex={0} min-height="200px" sx={{ outline: "none", xs: "24px" }} m="0 auto">
+          <Typography display="inline" sx={{ color: "#689f38", whiteSpace: "pre-wrap", fontSize: { xs: "24px", md: "28px" } }}>
             {typingString.attributes.content.slice(0, currentIndex)}
           </Typography>
           {typingInfo.isMissType ? (
-            <Typography display="inline" color="red">
+            <Typography display="inline" color="red" sx={{ fontSize: { xs: "24px", md: "28px" }, backgroundColor: "#e0e0e0" }}>
               {typingString.attributes.content[currentIndex]}
             </Typography>
           ) : (
-            <Typography display="inline" color="black">
+            <Typography display="inline" color="#333" sx={{ fontSize: { xs: "24px", md: "28px" }, backgroundColor: "#e0e0e0" }}>
               {typingString.attributes.content[currentIndex].replace(/\n/g, "↵").replace(/\t/g, "→")}
             </Typography>
           )}
-          <Typography component="div" display="inline" sx={{ whiteSpace: "pre-wrap" }}>
+          <Typography display="inline" sx={{ whiteSpace: "pre-wrap", fontSize: { xs: "24px", md: "28px" } }}>
             {typingString.attributes.content.slice(currentIndex + 1, typingString.attributes.content.length)}
           </Typography>
-        </div>
+        </Box>
       </Grid>
       <Button variant="contained" color="primary" onClick={ResetAll}>
         やり直す

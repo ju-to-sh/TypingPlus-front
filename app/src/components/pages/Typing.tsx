@@ -1,4 +1,4 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { FC, memo } from "react";
 import { LinearStepper } from "../organisms/common/LinearStepper";
 import { TypingQuestion } from "../organisms/typing/TypingQuestion";
@@ -10,6 +10,9 @@ export const Typing: FC = memo(() => {
         <Grid item xs={8} textAlign="center" mb={5}>
           <LinearStepper />
         </Grid>
+        <Typography fontWeight="bold" fontSize="18px" component="div" display="inline" color="#c52f24">
+          英文をクリックするとスタートできます
+        </Typography>
         <TypingQuestion />
       </Grid>
     </Box>
