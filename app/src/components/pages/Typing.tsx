@@ -10,9 +10,7 @@ export const Typing: FC = memo(() => {
         <Grid item xs={8} textAlign="center" mb={5}>
           <LinearStepper />
         </Grid>
-        <Grid item width="100%" minHeight="200px" textAlign="left" bgcolor="#F1938C" color="#fff" p={4} fontSize={{ xs: "16px", md: "18px" }} mb={5}>
-          <TypingQuestion />
-        </Grid>
+        <TypingQuestion />
       </Grid>
     </Box>
   );

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 import { typingState } from "../../../store/typingState";
 import { typingInfoState } from "../../../store/typingInfoState";
-import { Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import { questionStepState } from "../../../store/questionStepState";
 
 export const TypingQuestion: FC = memo(() => {
@@ -59,27 +59,41 @@ export const TypingQuestion: FC = memo(() => {
         }));
     }
   };
-  
+
+  const ResetAll = () => {
+    setCurrentIndex(0);
+    setQuestionIndex(0);
+    setInputValue("");
+    setActiveStep(0);
+  };
+
   useEffect(() => {
     setTypingString(typingGames[questionIndex]);
   }, [questionIndex, typingGames]);
   return (
-    <div onKeyDown={(e) => handleKey(e)} tabIndex={0}>
-      <Typography component="div" display="inline" color="green" sx={{ whiteSpace: "pre-wrap" }}>
-        {typingString.attributes.content.slice(0, currentIndex)}
-      </Typography>
-      {typingInfo.isMissType ? (
-        <Typography display="inline" color="red">
-          {typingString.attributes.content[currentIndex]}
-        </Typography>
-      ) : (
-        <Typography display="inline" color="black">
-          {typingString.attributes.content[currentIndex].replace(/\n/g, "↵").replace(/\t/g, "→")}
-        </Typography>
-      )}
-      <Typography component="div" display="inline" sx={{ whiteSpace: "pre-wrap" }}>
-        {typingString.attributes.content.slice(currentIndex + 1, typingString.attributes.content.length)}
-      </Typography>
-    </div>
+    <>
+      <Grid item width="100%" minHeight="200px" textAlign="left" bgcolor="#F1938C" color="#fff" p={4} fontSize={{ xs: "16px", md: "18px" }} mb={5}>
+        <div onKeyDown={(e) => handleKey(e)} tabIndex={0}>
+          <Typography component="div" display="inline" color="green" sx={{ whiteSpace: "pre-wrap" }}>
+            {typingString.attributes.content.slice(0, currentIndex)}
+          </Typography>
+          {typingInfo.isMissType ? (
+            <Typography display="inline" color="red">
+              {typingString.attributes.content[currentIndex]}
+            </Typography>
+          ) : (
+            <Typography display="inline" color="black">
+              {typingString.attributes.content[currentIndex].replace(/\n/g, "↵").replace(/\t/g, "→")}
+            </Typography>
+          )}
+          <Typography component="div" display="inline" sx={{ whiteSpace: "pre-wrap" }}>
+            {typingString.attributes.content.slice(currentIndex + 1, typingString.attributes.content.length)}
+          </Typography>
+        </div>
+      </Grid>
+      <Button variant="contained" color="primary" onClick={ResetAll}>
+        やり直す
+      </Button>
+    </>
   );
 });
