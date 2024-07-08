@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { FC, memo } from "react";
 import { LinearStepper } from "../organisms/common/LinearStepper";
 import { TypingQuestion } from "../organisms/typing/TypingQuestion";

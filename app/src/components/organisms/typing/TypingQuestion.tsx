@@ -49,7 +49,7 @@ export const TypingQuestion: FC = memo(() => {
   const handleKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
     e.preventDefault();
     !isRunning && start();
-    if (questionIndex === 4) {
+    if (questionIndex === 4 && currentIndex + 1 >= typingString.attributes.content.length) {
       pause();
       alert(`ミスタイプ：${typingInfo.missCount} CPM:${CPM(totalSeconds, typingGames[questionIndex].attributes.content.length)}`);
       navigate("/typing_results/:id");
@@ -94,7 +94,7 @@ export const TypingQuestion: FC = memo(() => {
     reset();
     isRunning && pause();
   };
-  
+
   useEffect(() => {
     setTypingString(typingGames[questionIndex]);
   }, [questionIndex, typingGames]);
