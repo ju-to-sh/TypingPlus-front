@@ -30,7 +30,7 @@ export const QuizCard: FC<Props> = memo((props) => {
             問題を解く
           </Button>
         ) : (
-          <Button variant="contained" color="secondary" component={RouterLink} to={`/typing_games/${id}`}>
+          <Button variant="contained" color="primary" component={RouterLink} to={`/typing_games/${id}`}>
             問題を解く
           </Button>
         )}

@@ -58,7 +58,15 @@ export const Router = memo(() => {
         />
         <Route path="/quizzes/:id" element={<Question />} />
         <Route
-          path="/game_list"
+          path="/quizzes"
+          element={
+            <DefaultLayout>
+              <GameList />
+            </DefaultLayout>
+          }
+        />
+        <Route
+          path="/typing_games"
           element={
             <DefaultLayout>
               <GameList />
