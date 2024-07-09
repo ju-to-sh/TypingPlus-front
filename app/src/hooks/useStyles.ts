@@ -25,4 +25,16 @@ export const useStyles = makeStyles(() => ({
     display: "inline",
     fontSize: "24px",
   },
+  modalBox: {
+    textAlign: "center",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    border: "2px solid #fff",
+    backgroundColor: "#fff",
+    padding: "16px",
+    outline: "none",
+  },
 }));
