@@ -8,7 +8,6 @@ import { GameList } from "../components/pages/GameList";
 import { Signup } from "../components/pages/Signup";
 import { Typing } from "../components/pages/Typing";
 import { TypingResult } from "../components/pages/TypingResult";
-import { TypingList } from "../components/pages/TypingList";
 import { QuestionResult } from "../components/pages/QuestionResult";
 import { Games } from "../components/pages/Games";
 import { TermsOfService } from "../components/pages/TermsOfService";
@@ -75,7 +74,6 @@ export const Router = memo(() => {
         />
         <Route path="/quiz_results/:id" element={<QuestionResult />} />
         <Route path="/typing_games/:id" element={<Typing />} />
-        <Route path="/typing_list" element={<TypingList />} />
         <Route path="/typing_result" element={<TypingResult />} />
         <Route path="*" element={<Page404 />} />
       </Routes>

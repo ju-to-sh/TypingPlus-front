@@ -1,5 +1,5 @@
 import { FC, memo, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 import { typingState } from "../../../store/typingState";
 import { typingInfoState } from "../../../store/typingInfoState";
@@ -7,9 +7,10 @@ import { Box, Button, Grid, Typography } from "@mui/material";
 import { questionStepState } from "../../../store/questionStepState";
 import { useStopwatch } from "react-timer-hook";
 import { TypingData } from "../../../types/api/typing";
+import { SuccessModal } from "./SuccessModal";
+import { useApi } from "../../../hooks/useApi";
 
 export const TypingQuestion: FC = memo(() => {
-  const navigate = useNavigate();
   const param = useParams();
   const typingGames = useRecoilValue(typingState({ id: param.id }));
   const [questionIndex, setQuestionIndex] = useState(0);
@@ -19,6 +20,7 @@ export const TypingQuestion: FC = memo(() => {
   const [inputValue, setInputValue] = useState("");
   const [totalLength, setTotalLength] = useState(0);
   const { totalSeconds, isRunning, start, pause, reset } = useStopwatch();
+  const [open, setOpen] = useState(false);
   const setActiveStep = useSetRecoilState(questionStepState);
 
   const ChangeKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -45,14 +47,28 @@ export const TypingQuestion: FC = memo(() => {
   };
 
   const CPM = (seconds: number, length: number) => length / (seconds / 60);
+  const ScoreCalculate = (typeSpeed: number, missType: number) => typeSpeed - missType;
 
   const handleKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
     e.preventDefault();
     !isRunning && start();
-    if (questionIndex === 4) {
+    if (questionIndex === 4 && currentIndex + 1 >= typingString.attributes.content.length) {
       pause();
-      alert(`ミスタイプ：${typingInfo.missCount} CPM:${CPM(totalSeconds, typingGames[questionIndex].attributes.content.length)}`);
-      navigate("/typing_results/:id");
+      const typingResult = {
+        type_speed: CPM(totalSeconds, totalLength),
+        miss_type: typingInfo.missCount,
+        score: ScoreCalculate(CPM(totalSeconds, totalLength), typingInfo.missCount),
+        game_list_id: Number(param.id),
+      };
+      useApi
+        .post("/typing_game_results", { typing_game_result: typingResult })
+        .then((res) => {
+          sessionStorage.clear();
+          sessionStorage.setItem("typing_game_results", JSON.stringify(res.data));
+        })
+        .catch((error) => console.log(error));
+      setOpen(true);
+      return;
     }
     let inputkey = ChangeKey(e);
 
@@ -91,10 +107,11 @@ export const TypingQuestion: FC = memo(() => {
     setQuestionIndex(0);
     setInputValue("");
     setActiveStep(0);
+    setOpen(false);
     reset();
     isRunning && pause();
   };
-  
+
   useEffect(() => {
     setTypingString(typingGames[questionIndex]);
   }, [questionIndex, typingGames]);
@@ -137,6 +154,7 @@ export const TypingQuestion: FC = memo(() => {
       <Button variant="contained" color="primary" onClick={ResetAll}>
         やり直す
       </Button>
+      <SuccessModal onClick={ResetAll} open={open} missType={typingInfo.missCount} speed={CPM(totalSeconds, totalLength)} />
     </>
   );
 });

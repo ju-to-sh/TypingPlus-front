@@ -30,7 +30,7 @@ export const Games: FC = memo(() => {
           attribution={"People illustrations by Storyset"}
           attributionSrc={"https://storyset.com/people"}
           src={"../images/quiz.png"}
-          href={"/game_list"}
+          href={"/quizzes"}
         />
         <GameCard
           title={"タイピング問題"}
@@ -38,7 +38,7 @@ export const Games: FC = memo(() => {
           attribution={"Work illustrations by Storyset"}
           attributionSrc={"https://storyset.com/work"}
           src={"../images/typing.png"}
-          href={"/typing_list"}
+          href={"/typing_games"}
         />
       </Stack>
     </Stack>
