@@ -8,6 +8,7 @@ import { questionStepState } from "../../../store/questionStepState";
 import { useStopwatch } from "react-timer-hook";
 import { TypingData } from "../../../types/api/typing";
 import { SuccessModal } from "./SuccessModal";
+import { useApi } from "../../../hooks/useApi";
 
 export const TypingQuestion: FC = memo(() => {
   const param = useParams();
@@ -46,15 +47,28 @@ export const TypingQuestion: FC = memo(() => {
   };
 
   const CPM = (seconds: number, length: number) => length / (seconds / 60);
+  const ScoreCalculate = (typeSpeed: number, missType: number) => typeSpeed - missType;
 
   const handleKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
     e.preventDefault();
     !isRunning && start();
     if (questionIndex === 4 && currentIndex + 1 >= typingString.attributes.content.length) {
       pause();
+      const typingResult = {
+        type_speed: CPM(totalSeconds, totalLength),
+        miss_type: typingInfo.missCount,
+        score: ScoreCalculate(CPM(totalSeconds, totalLength), typingInfo.missCount),
+        game_list_id: Number(param.id),
+      };
+      useApi
+        .post("/typing_game_results", { typing_game_result: typingResult })
+        .then((res) => {
+          sessionStorage.clear();
+          sessionStorage.setItem("typing_game_results", JSON.stringify(res.data));
+        })
+        .catch((error) => console.log(error));
       setOpen(true);
       return;
-      // alert(`ミスタイプ：${typingInfo.missCount} CPM:${CPM(totalSeconds, typingGames[questionIndex].attributes.content.length)}`);
     }
     let inputkey = ChangeKey(e);
 
