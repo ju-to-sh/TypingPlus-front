@@ -6,10 +6,12 @@ import { Link as RouterLink } from "react-router-dom";
 type Props = {
   onClick: () => void;
   open: boolean;
+  missType: number;
+  speed: number;
 };
 
 export const SuccessModal: FC<Props> = memo((props) => {
-  const { onClick, open } = props;
+  const { onClick, open, missType, speed } = props;
   const classes = useStyles();
 
   return (
@@ -32,8 +34,8 @@ export const SuccessModal: FC<Props> = memo((props) => {
               タイピング結果
             </Typography>
             <Stack direction="column" justifyContent="center" alignItems="center" spacing={2} border="1px solid #C1BBBB" p="8px 16px" m={2}>
-              <Typography pr={2}>{`CPM(1分間当たりの入力文字数):`}</Typography>
-              <Typography pr={2}>{`ミスタイプ数:回`}</Typography>
+              <Typography pr={2}>{`CPM(1分間当たりの入力文字数):${speed}`}</Typography>
+              <Typography pr={2}>{`ミスタイプ数:${missType}回`}</Typography>
             </Stack>
             <Stack direction="row" justifyContent="center" alignItems="center" spacing={2} pt={2}>
               <Button variant="contained" color="primary" component={RouterLink} to="/typing_games">

@@ -154,7 +154,7 @@ export const TypingQuestion: FC = memo(() => {
       <Button variant="contained" color="primary" onClick={ResetAll}>
         やり直す
       </Button>
-      <SuccessModal onClick={ResetAll} open={open} />
+      <SuccessModal onClick={ResetAll} open={open} missType={typingInfo.missCount} speed={CPM(totalSeconds, totalLength)} />
     </>
   );
 });
