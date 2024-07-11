@@ -9,6 +9,7 @@ import { useLocation } from "react-router-dom";
 export const GameList: FC = memo(() => {
   const location = useLocation();
   const gameLists = useRecoilValue(gameListState({ path: location.pathname }));
+  console.log(`location: ${location.pathname}`)
 
   return (
     <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", overflow: "scroll" }}>

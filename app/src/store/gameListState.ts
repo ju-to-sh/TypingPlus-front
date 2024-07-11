@@ -10,6 +10,7 @@ export const gameListState = atomFamily<GameLists | any, { path: string | any }>
       get: async ({ get }) => {
         try {
           const response = await useApi.get<GameLists>(`${path}`);
+          console.log(path)
           return response.data.data;
         } catch (error) {
           throw error;
