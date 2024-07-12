@@ -34,7 +34,7 @@ export const SuccessModal: FC<Props> = memo((props) => {
               タイピング結果
             </Typography>
             <Stack direction="column" justifyContent="center" alignItems="center" spacing={2} border="1px solid #C1BBBB" p="8px 16px" m={2}>
-              <Typography pr={2}>{`CPM(1分間当たりの入力文字数):${speed}`}</Typography>
+              <Typography pr={2}>{`CPM(1分間当たりの入力文字数):${Math.round(speed)}`}</Typography>
               <Typography pr={2}>{`ミスタイプ数:${missType}回`}</Typography>
             </Stack>
             <Stack direction="row" justifyContent="center" alignItems="center" spacing={2} pt={2}>
