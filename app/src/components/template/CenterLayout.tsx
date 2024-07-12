@@ -7,5 +7,9 @@ type Props = {
 
 export const CenterLayout: FC<Props> = memo((props) => {
   const { children } = props;
-  return <Container maxWidth="md">{children}</Container>;
+  return (
+    <Container maxWidth="md" sx={{ display: "flex", justifyContent: "center" }}>
+      {children}
+    </Container>
+  );
 });
