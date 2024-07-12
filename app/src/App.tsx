@@ -6,12 +6,14 @@ import CssBaseline from "@mui/material/CssBaseline";
 import theme from "./theme/theme";
 import { Suspense } from "react";
 import { CookiesProvider } from "react-cookie";
+import { Loading } from "./components/atoms/Loading";
+import { Box } from "@mui/material";
 
 const Fallback = () => {
   return (
-    <div id="load">
-      <span>Loading...</span>
-    </div>
+    <Box id="load" sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100Vh" }}>
+      <Loading />
+    </Box>
   );
 };
 
