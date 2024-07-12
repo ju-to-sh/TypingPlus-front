@@ -4,18 +4,22 @@ import Collapse from "@mui/material/Collapse";
 import { FC, memo, useState } from "react";
 import { GameCard } from "../molecules/GameCard";
 import { flashState } from "../../store/flashState";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 
 export const Games: FC = memo(() => {
   const [open, setOpen] = useState(true);
-  const flash = useRecoilValue(flashState);
+  const [flash, setFlash] = useRecoilState(flashState);
+  const HandleClose = () => {
+    setOpen(false);
+    setFlash(false);
+  };
 
   return (
     <Grid container direction="column" justifyContent="center" alignItems="center">
       <Box>
         {flash && (
           <Collapse in={open}>
-            <Alert severity="success" onClose={() => setOpen(false)}>
+            <Alert severity="success" onClose={HandleClose}>
               ログインしました
             </Alert>
             <Box mb={3} />

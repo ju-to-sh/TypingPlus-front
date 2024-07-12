@@ -2,19 +2,23 @@ import { Box, Stack, Button, Typography, Collapse, Alert, Grid } from "@mui/mate
 import { Link as RouterLink } from "react-router-dom";
 import { FC, memo, useState } from "react";
 import FileDownloadDoneIcon from "@mui/icons-material/FileDownloadDone";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { flashState } from "../../store/flashState";
 
 export const Top: FC = memo(() => {
   const [open, setOpen] = useState(true);
-  const flash = useRecoilValue(flashState);
+  const [flash, setFlash] = useRecoilState(flashState);
+  const HandleClose = () => {
+    setOpen(false);
+    setFlash(false);
+  };
 
   return (
     <Grid container direction="column" justifyContent="center" alignItems="center">
       <Box sx={{ minWidth: 600 }}>
         {flash && (
           <Collapse in={open}>
-            <Alert severity="success" onClose={() => setOpen(false)}>
+            <Alert severity="success" onClose={HandleClose}>
               ログアウトしました
             </Alert>
           </Collapse>
