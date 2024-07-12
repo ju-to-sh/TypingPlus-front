@@ -1,7 +1,7 @@
 import { FC, ReactNode, memo } from "react";
 import { Header } from "../organisms/layout/Header";
 import { Footer } from "../organisms/layout/Footer";
-import { Box, Container } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import { LoginHeader } from "../organisms/layout/LoginHeader";
 import { Cookies } from "react-cookie";
 
@@ -15,10 +15,12 @@ export const DefaultLayout: FC<Props> = memo((props) => {
   const token = cookies.get("accesstoken");
 
   return (
-    <Box pt="80px" pb="105px">
+    <Grid pt="80px" pb="80px" display="flex" height="100Vh">
       {token ? <LoginHeader /> : <Header />}
-      <Container maxWidth="md">{children}</Container>
+      <Container maxWidth="md" sx={{ display: "flex", justifyContent: "center", overflow: "scroll" }}>
+        {children}
+      </Container>
       <Footer />
-    </Box>
+    </Grid>
   );
 });

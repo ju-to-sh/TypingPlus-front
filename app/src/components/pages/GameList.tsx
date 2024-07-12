@@ -9,12 +9,11 @@ import { useLocation } from "react-router-dom";
 export const GameList: FC = memo(() => {
   const location = useLocation();
   const gameLists = useRecoilValue(gameListState({ path: location.pathname }));
-  console.log(`location: ${location.pathname}`)
 
   return (
-    <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", overflow: "scroll" }}>
-      <Grid container direction="row" sx={{ minWidth: 600, maxWidth: 1000 }} margin="0 auto" justifyContent="center" alignItems="center" p={3}>
-        <Grid item xs={12} textAlign="center" mb="20px">
+    <Grid container direction="row" sx={{ minWidth: 600, maxWidth: 1000 }} margin="0 auto" p={3} justifyContent="center" alignItems="center">
+      <Box sx={{ overflow: "scroll" }}>
+        <Grid item xs={12} textAlign="center" pb={3}>
           {location.pathname === "/quizzes" ? (
             <Typography variant="h5" gutterBottom>
               クイズ一覧
@@ -39,7 +38,7 @@ export const GameList: FC = memo(() => {
             </Box>
           ))}
         </Grid>
-      </Grid>
-    </Box>
+      </Box>
+    </Grid>
   );
 });

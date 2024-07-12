@@ -5,6 +5,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { useApi } from "../../../hooks/useApi";
 import { useCookies } from "react-cookie";
+import { useSetRecoilState } from "recoil";
+import { flashState } from "../../../store/flashState";
 
 type Inputs = {
   email: string;
@@ -20,6 +22,7 @@ export const LoginForm: FC = memo(() => {
     reset,
     formState: { errors },
   } = useForm<Inputs>();
+  const setFlash = useSetRecoilState(flashState);
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
@@ -30,7 +33,8 @@ export const LoginForm: FC = memo(() => {
         if (accessToken) {
           setCookie("accesstoken", accessToken);
           reset();
-          navigate("/games", { state: { message: "ログインしました" } });
+          setFlash(true);
+          navigate("/games");
         }
       })
       .catch((error) => {
