@@ -9,12 +9,15 @@ import { Link } from "@mui/material";
 import { useCookies } from "react-cookie";
 import { useApi } from "../../hooks/useApi";
 import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { flashState } from "../../store/flashState";
 
 export const UserMenu: FC = memo(() => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [cookies, setCookie, removeCookie] = useCookies(["accesstoken"]);
   const navigate = useNavigate();
+  const setFlash = useSetRecoilState(flashState);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -26,7 +29,9 @@ export const UserMenu: FC = memo(() => {
     await useApi.post("/logout");
     removeCookie("accesstoken");
     setAnchorEl(null);
-    navigate("/", { state: { message: "ログアウトしました" } });
+    setFlash(true);
+    navigate("/");
+    setTimeout(() => setFlash(false), 1000);
   };
 
   return (

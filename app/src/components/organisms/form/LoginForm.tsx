@@ -35,6 +35,7 @@ export const LoginForm: FC = memo(() => {
           reset();
           setFlash(true);
           navigate("/games");
+          setTimeout(() => setFlash(false), 1000);
         }
       })
       .catch((error) => {
