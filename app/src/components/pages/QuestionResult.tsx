@@ -5,11 +5,14 @@ import { quizResultState } from "../../store/quizResultState";
 import { QuizState } from "../../store/quizState";
 import { Link as RouterLink, useParams } from "react-router-dom";
 import { QuizChoiceAttributes, QuizResuls } from "../../types/api/quiz";
+import { NoLoginUserQuizResultState } from "../../store/NoLoginUserQuizResultState";
 
 export const QuestionResult: FC = memo(() => {
   const param = useParams();
   const quizResults = useRecoilValue(quizResultState({ id: param.id }));
   const quizzes = useRecoilValue(QuizState({ id: param.id }));
+  // const [NoLoginUserQuizResults, setNoLoginUserQuizResults] = useState(sessionStorage.getItem("quiz_results"));
+  const NoLoginUserQuizResults = useRecoilValue(NoLoginUserQuizResultState);
 
   const GetCorrectAnswer = (quizChoices: Array<QuizChoiceAttributes>) => quizChoices.find((choice) => Boolean(choice.is_correct) === true);
 
@@ -20,8 +23,16 @@ export const QuestionResult: FC = memo(() => {
   const JudgeArray: boolean[] = quizResults.map((result: QuizResuls, index: number) =>
     JudgeAnswer(GetCorrectAnswer(quizzes[index].attributes.quiz_choices)?.content, GetUserAnswer(quizzes[index].attributes.quiz_choices, result.select_answer))
   );
+  const NoLoginUserJudgeArray: boolean[] = [true];
+  // NoLoginUserQuizResults &&
+  // JSON.parse(NoLoginUserQuizResults).map((result: QuizResuls, index: number) =>
+  //   JudgeAnswer(GetCorrectAnswer(quizzes[index].attributes.quiz_choices)?.content, GetUserAnswer(quizzes[index].attributes.quiz_choices, result.select_answer))
+  // );
+  console.log(quizResults);
+  console.log(NoLoginUserQuizResults === null);
 
   const correctAnswersCount: number = JudgeArray.filter((answer) => answer).length;
+  const NoLoginUserCorrectAnswersCount: number = NoLoginUserJudgeArray.filter((answer) => answer).length;
 
   return (
     <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", overflow: "scroll", position: "relative" }}>
@@ -33,12 +44,23 @@ export const QuestionResult: FC = memo(() => {
         </Grid>
         <Grid item>
           <Box display="flex" justifyContent="center" alignItems="center" border="1px solid #C1BBBB" p="8px 16px" bgcolor="#ffeded">
-            <Typography pr={2}>{`正解数 : ${correctAnswersCount}問/5問`}</Typography>
+            <Typography pr={2}>{
+              /* {quizResults.length === 0 ? `正解数 : ${NoLoginUserCorrectAnswersCount}問/5問` : `正解数 : ${correctAnswersCount}問/5問`} */
+              `正解数 : ${correctAnswersCount}問/5問`
+            }</Typography>
           </Box>
           <Stack spacing={2}>
             <List>
               {quizResults.length === 0
-                ? sessionStorage.getItem("quiz_results")
+                ? NoLoginUserQuizResults &&
+                  JSON.parse(NoLoginUserQuizResults)?.map((result: any, index: number) => (
+                    <ListItem key={index} sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start", mb: "5px" }}>
+                      <Typography variant="body1">問題{index + 1}.</Typography>
+                      <ListItemText primary={quizzes[index].attributes.content} />
+                      <Typography variant="body1">{`正解 : ${GetCorrectAnswer(quizzes[index].attributes.quiz_choices)?.content}`}</Typography>
+                      <Typography variant="body1">{`ユーザーの回答 : ${GetUserAnswer(quizzes[index].attributes.quiz_choices, result.select_answer)}`}</Typography>
+                    </ListItem>
+                  ))
                 : quizResults.map((result: QuizResuls, index: number) => (
                     <ListItem key={index} sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start", mb: "5px" }}>
                       <Typography variant="body1">問題{index + 1}.</Typography>

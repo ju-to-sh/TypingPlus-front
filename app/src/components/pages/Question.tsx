@@ -1,7 +1,7 @@
 import { FC, memo, useState } from "react";
 import { LinearStepper } from "../organisms/common/LinearStepper";
 import { Box, FormControl, FormControlLabel, Grid, Radio, RadioGroup } from "@mui/material";
-import { QuestionButton } from "../molecules/QuestionButton";
+import { QuizButton } from "../molecules/QuizButton";
 import { useRecoilValue } from "recoil";
 import { QuizState } from "../../store/quizState";
 import { Answer, QuizChoiceAttributes } from "../../types/api/quiz";
@@ -65,7 +65,7 @@ export const Question: FC = memo(() => {
           </FormControl>
         </Grid>
         <Grid item xs={10} textAlign="center">
-          <QuestionButton quizIndex={quizIndex} setQuizIndex={handleQuizIndexChange} setValue={setValue} answers={answers} />
+          <QuizButton quizIndex={quizIndex} setQuizIndex={handleQuizIndexChange} setValue={setValue} answers={answers} />
         </Grid>
       </Grid>
     </Box>

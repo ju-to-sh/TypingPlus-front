@@ -10,16 +10,16 @@ import _ from "lodash";
 type Props = {
   setQuizIndex: (number: number) => void;
   quizIndex: number;
-  setValue: (string: string) => void;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
   answers: Array<Answer>;
 };
 
-const NumberOfQuestions = 5;
-
-export const QuestionButton: FC<Props> = memo((props) => {
+export const QuizButton: FC<Props> = memo((props) => {
+  const NumberOfQuestions = 5;
   const param = useParams();
   const { quizIndex, setQuizIndex, setValue, answers } = props;
   const setActiveStep = useSetRecoilState(questionStepState);
+
   const handleNext = () => {
     setQuizIndex(quizIndex + 1);
     setActiveStep((prevActiveStep: number) => prevActiveStep + 1);
@@ -33,6 +33,8 @@ export const QuestionButton: FC<Props> = memo((props) => {
       .then((res) => {
         sessionStorage.clear();
         sessionStorage.setItem("quiz_results", JSON.stringify(res.data[0]));
+        if (res.data[0] !== 0) {
+        }
       })
       .catch((error) => console.log(error));
   };
