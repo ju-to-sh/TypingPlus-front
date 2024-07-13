@@ -32,11 +32,9 @@ export const QuizButton: FC<Props> = memo((props) => {
     useApi
       .post("/quiz_results", { quiz_result: snakeCasedAnswers })
       .then((res) => {
-        navigate(`/quiz_results/${id}`);
         sessionStorage.clear();
         sessionStorage.setItem("quiz_results", JSON.stringify(res.data[0]));
-        if (res.data[0] !== 0) {
-        }
+        navigate(`/quiz_results/${id}`);
       })
       .catch((error) => console.log(error));
   };
