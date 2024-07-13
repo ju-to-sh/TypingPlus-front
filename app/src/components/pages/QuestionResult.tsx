@@ -1,15 +1,15 @@
 import { Box, Button, Grid, List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
-import { FC, memo } from "react";
+import { FC, memo, useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { quizResultState } from "../../store/quizResultState";
 import { QuizState } from "../../store/quizState";
 import { Link as RouterLink, useParams } from "react-router-dom";
 import { QuizChoiceAttributes, QuizResuls } from "../../types/api/quiz";
 import { NoLoginUserQuizResultState } from "../../store/NoLoginUserQuizResultState";
+import { useApi } from "../../hooks/useApi";
 
 export const QuestionResult: FC = memo(() => {
   const { id } = useParams<string>();
-  const quizResults = useRecoilValue(quizResultState(id));
+  const [quizResults, setQuizResults] = useState([]);
   const quizzes = useRecoilValue(QuizState(id as string));
 
   const NoLoginUserQuizResults = useRecoilValue(NoLoginUserQuizResultState);
@@ -30,9 +30,17 @@ export const QuestionResult: FC = memo(() => {
   // );
   // console.log(quizResults);
   // console.log(NoLoginUserQuizResults === null);
+  const fetchData = async () => {
+    const response = await useApi.get<any>(`/quiz_results/${id}`);
+    setQuizResults(response.data);
+  };
 
   const correctAnswersCount: number = JudgeArray.filter((answer) => answer).length;
   const NoLoginUserCorrectAnswersCount: number = NoLoginUserJudgeArray.filter((answer) => answer).length;
+
+  useEffect(() => {
+    fetchData();
+  }, [id]);
 
   return (
     <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", overflow: "scroll", position: "relative" }}>
@@ -44,10 +52,7 @@ export const QuestionResult: FC = memo(() => {
         </Grid>
         <Grid item>
           <Box display="flex" justifyContent="center" alignItems="center" border="1px solid #C1BBBB" p="8px 16px" bgcolor="#ffeded">
-            <Typography pr={2}>{
-              /* {quizResults.length === 0 ? `正解数 : ${NoLoginUserCorrectAnswersCount}問/5問` : `正解数 : ${correctAnswersCount}問/5問`} */
-              `正解数 : ${correctAnswersCount}問/5問`
-            }</Typography>
+            <Typography pr={2}>{quizResults.length === 0 ? `正解数 : ${NoLoginUserCorrectAnswersCount}問/5問` : `正解数 : ${correctAnswersCount}問/5問`}</Typography>
           </Box>
           <Stack spacing={2}>
             <List>

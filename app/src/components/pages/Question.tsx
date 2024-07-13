@@ -1,8 +1,8 @@
-import { FC, memo, useEffect, useState } from "react";
+import { FC, memo, useState } from "react";
 import { LinearStepper } from "../organisms/common/LinearStepper";
 import { Box, FormControl, FormControlLabel, Grid, Radio, RadioGroup } from "@mui/material";
 import { QuizButton } from "../molecules/QuizButton";
-import { useRecoilValue, useResetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { QuizState } from "../../store/quizState";
 import { Answer, QuizChoiceAttributes } from "../../types/api/quiz";
 import { useParams } from "react-router-dom";
@@ -10,7 +10,6 @@ import { useParams } from "react-router-dom";
 export const Question: FC = memo(() => {
   const { id } = useParams<string>();
   const quiz = useRecoilValue(QuizState(id as string));
-  const resetQuizState = useResetRecoilState(QuizState(id as string));
   const [quizIndex, setQuizIndex] = useState<number>(0);
   const [answers, setAnswers] = useState<Array<Answer>>([]);
   const [value, setValue] = useState<string>("");
@@ -33,9 +32,6 @@ export const Question: FC = memo(() => {
     setValue(e.target.value);
   };
 
-  useEffect(() => {
-    resetQuizState();
-  }, [id, resetQuizState]);
   return (
     <Box sx={{ display: "flex", alignItems: "center", height: "100vh" }}>
       <Grid container direction="row" sx={{ minWidth: 600, maxWidth: 1000 }} margin="0 auto" justifyContent="center" alignItems="center" p={3}>

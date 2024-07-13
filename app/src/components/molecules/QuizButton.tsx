@@ -1,6 +1,6 @@
 import { FC, memo, useCallback, useEffect } from "react";
 import { Box, Button } from "@mui/material";
-import { Link as RouterLink, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { questionStepState } from "../../store/questionStepState";
 import { Answer } from "../../types/api/quiz";
@@ -19,6 +19,7 @@ export const QuizButton: FC<Props> = memo((props) => {
   const { id } = useParams<string>();
   const { quizIndex, setQuizIndex, setValue, answers } = props;
   const setActiveStep = useSetRecoilState(questionStepState);
+  const navigate = useNavigate();
 
   const handleNext = () => {
     setQuizIndex(quizIndex + 1);
@@ -31,6 +32,7 @@ export const QuizButton: FC<Props> = memo((props) => {
     useApi
       .post("/quiz_results", { quiz_result: snakeCasedAnswers })
       .then((res) => {
+        navigate(`/quiz_results/${id}`);
         sessionStorage.clear();
         sessionStorage.setItem("quiz_results", JSON.stringify(res.data[0]));
         if (res.data[0] !== 0) {
@@ -61,7 +63,7 @@ export const QuizButton: FC<Props> = memo((props) => {
         前
       </Button>
       {quizIndex === NumberOfQuestions - 1 ? (
-        <Button variant="contained" color="primary" onClick={handleResult} component={RouterLink} to={`/quiz_results/${id}`}>
+        <Button variant="contained" color="primary" onClick={handleResult}>
           結果を見る
         </Button>
       ) : (
