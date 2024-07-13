@@ -27,6 +27,7 @@ export const QuestionButton: FC<Props> = memo((props) => {
   };
   const handleResult = () => {
     const snakeCasedAnswers = answers.map((answer) => _.mapKeys(answer, (value, key: string) => _.snakeCase(key)));
+    setActiveStep(0);
     useApi
       .post("/quiz_results", { quiz_result: snakeCasedAnswers })
       .then((res) => {
