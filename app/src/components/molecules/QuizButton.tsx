@@ -16,7 +16,7 @@ type Props = {
 
 export const QuizButton: FC<Props> = memo((props) => {
   const NumberOfQuestions = 5;
-  const param = useParams();
+  const { id } = useParams<string>();
   const { quizIndex, setQuizIndex, setValue, answers } = props;
   const setActiveStep = useSetRecoilState(questionStepState);
 
@@ -61,7 +61,7 @@ export const QuizButton: FC<Props> = memo((props) => {
         前
       </Button>
       {quizIndex === NumberOfQuestions - 1 ? (
-        <Button variant="contained" color="primary" onClick={handleResult} component={RouterLink} to={`/quiz_results/${param.id}`}>
+        <Button variant="contained" color="primary" onClick={handleResult} component={RouterLink} to={`/quiz_results/${id}`}>
           結果を見る
         </Button>
       ) : (

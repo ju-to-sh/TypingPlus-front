@@ -8,10 +8,10 @@ import { QuizChoiceAttributes, QuizResuls } from "../../types/api/quiz";
 import { NoLoginUserQuizResultState } from "../../store/NoLoginUserQuizResultState";
 
 export const QuestionResult: FC = memo(() => {
-  const param = useParams();
-  const quizResults = useRecoilValue(quizResultState({ id: param.id }));
-  const quizzes = useRecoilValue(QuizState({ id: param.id }));
-  // const [NoLoginUserQuizResults, setNoLoginUserQuizResults] = useState(sessionStorage.getItem("quiz_results"));
+  const { id } = useParams<string>();
+  const quizResults = useRecoilValue(quizResultState(id));
+  const quizzes = useRecoilValue(QuizState(id as string));
+
   const NoLoginUserQuizResults = useRecoilValue(NoLoginUserQuizResultState);
 
   const GetCorrectAnswer = (quizChoices: Array<QuizChoiceAttributes>) => quizChoices.find((choice) => Boolean(choice.is_correct) === true);
@@ -28,8 +28,8 @@ export const QuestionResult: FC = memo(() => {
   // JSON.parse(NoLoginUserQuizResults).map((result: QuizResuls, index: number) =>
   //   JudgeAnswer(GetCorrectAnswer(quizzes[index].attributes.quiz_choices)?.content, GetUserAnswer(quizzes[index].attributes.quiz_choices, result.select_answer))
   // );
-  console.log(quizResults);
-  console.log(NoLoginUserQuizResults === null);
+  // console.log(quizResults);
+  // console.log(NoLoginUserQuizResults === null);
 
   const correctAnswersCount: number = JudgeArray.filter((answer) => answer).length;
   const NoLoginUserCorrectAnswersCount: number = NoLoginUserJudgeArray.filter((answer) => answer).length;
