@@ -1,6 +1,6 @@
 import { FC, memo, useCallback, useEffect } from "react";
 import { Box, Button } from "@mui/material";
-import { Link as RouterLink, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { questionStepState } from "../../store/questionStepState";
 import { Answer } from "../../types/api/quiz";
@@ -10,16 +10,17 @@ import _ from "lodash";
 type Props = {
   setQuizIndex: (number: number) => void;
   quizIndex: number;
-  setValue: (string: string) => void;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
   answers: Array<Answer>;
 };
 
-const NumberOfQuestions = 5;
-
-export const QuestionButton: FC<Props> = memo((props) => {
-  const param = useParams();
+export const QuizButton: FC<Props> = memo((props) => {
+  const NumberOfQuestions = 5;
+  const { id } = useParams<string>();
   const { quizIndex, setQuizIndex, setValue, answers } = props;
   const setActiveStep = useSetRecoilState(questionStepState);
+  const navigate = useNavigate();
+
   const handleNext = () => {
     setQuizIndex(quizIndex + 1);
     setActiveStep((prevActiveStep: number) => prevActiveStep + 1);
@@ -27,11 +28,13 @@ export const QuestionButton: FC<Props> = memo((props) => {
   };
   const handleResult = () => {
     const snakeCasedAnswers = answers.map((answer) => _.mapKeys(answer, (value, key: string) => _.snakeCase(key)));
+    setActiveStep(0);
     useApi
       .post("/quiz_results", { quiz_result: snakeCasedAnswers })
       .then((res) => {
         sessionStorage.clear();
         sessionStorage.setItem("quiz_results", JSON.stringify(res.data[0]));
+        navigate(`/quiz_results/${id}`);
       })
       .catch((error) => console.log(error));
   };
@@ -58,7 +61,7 @@ export const QuestionButton: FC<Props> = memo((props) => {
         前
       </Button>
       {quizIndex === NumberOfQuestions - 1 ? (
-        <Button variant="contained" color="primary" onClick={handleResult} component={RouterLink} to={`/quiz_results/${param.id}`}>
+        <Button variant="contained" color="primary" onClick={handleResult}>
           結果を見る
         </Button>
       ) : (

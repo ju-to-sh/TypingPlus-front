@@ -15,7 +15,8 @@ import { flashState } from "../../store/flashState";
 export const UserMenu: FC = memo(() => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const [cookies, setCookie, removeCookie] = useCookies(["accesstoken"]);
+  const [, , removeCookie] = useCookies(["accesstoken"]);
+
   const navigate = useNavigate();
   const setFlash = useSetRecoilState(flashState);
 

@@ -1,19 +1,20 @@
-import { atomFamily, selector } from "recoil";
+import { atomFamily, selectorFamily } from "recoil";
 import { useApi } from "../hooks/useApi";
-import { Quiz } from "../types/api/quiz";
+import { QuizData } from "../types/api/quiz";
 
-export const QuizState = atomFamily<Quiz | any, { id: string | any }>({
+export const quizQuery = selectorFamily({
+  key: "quizQuery",
+  get: (id: string) => async () => {
+    try {
+      const response = await useApi.get(`/quizzes/${id}`);
+      return response.data.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+});
+
+export const QuizState = atomFamily<Array<QuizData>, string>({
   key: "QuizState",
-  default: ({ id }: string | any) =>
-    selector({
-      key: "QuizQuery",
-      get: async ({ get }) => {
-        try {
-          const response = await useApi.get<Quiz>(`/quizzes/${id}`);
-          return response.data.data;
-        } catch (error) {
-          throw error;
-        }
-      },
-    }),
+  default: (id: string) => quizQuery(id),
 });

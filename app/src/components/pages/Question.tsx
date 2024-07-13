@@ -1,25 +1,24 @@
 import { FC, memo, useState } from "react";
 import { LinearStepper } from "../organisms/common/LinearStepper";
 import { Box, FormControl, FormControlLabel, Grid, Radio, RadioGroup } from "@mui/material";
-import { QuestionButton } from "../molecules/QuestionButton";
+import { QuizButton } from "../molecules/QuizButton";
 import { useRecoilValue } from "recoil";
 import { QuizState } from "../../store/quizState";
 import { Answer, QuizChoiceAttributes } from "../../types/api/quiz";
 import { useParams } from "react-router-dom";
 
 export const Question: FC = memo(() => {
-  const param = useParams();
-  const quizState = useRecoilValue(QuizState({ id: param.id }));
-  const [quizIndex, setQuizIndex] = useState(0);
+  const { id } = useParams<string>();
+  const quiz = useRecoilValue(QuizState(id as string));
+  const [quizIndex, setQuizIndex] = useState<number>(0);
   const [answers, setAnswers] = useState<Array<Answer>>([]);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState<string>("");
 
   const handleQuizIndexChange = (newNumber: number) => setQuizIndex(newNumber);
 
   const SelectAnswer = (e: any) => {
     const updatedAnswers = [...answers];
-    const questionId = quizState[quizIndex].id;
-
+    const questionId: string = quiz[quizIndex].id;
     const answerIndex = updatedAnswers.findIndex((answer) => answer.quizId === questionId);
     if (answerIndex !== -1) {
       updatedAnswers[answerIndex] = { quizId: questionId, selectAnswer: e.target.value };
@@ -40,12 +39,12 @@ export const Question: FC = memo(() => {
           <LinearStepper />
         </Grid>
         <Grid item width="100%" minHeight="200px" textAlign="left" bgcolor="#F1938C" color="#fff" p={4} fontSize={{ xs: "16px", md: "18px" }} mb={5}>
-          <pre style={{ whiteSpace: "pre-wrap" }}>{quizState[quizIndex].attributes.content}</pre>
+          <pre style={{ whiteSpace: "pre-wrap" }}>{quiz[quizIndex].attributes.content}</pre>
         </Grid>
         <Grid item xs={12} textAlign="center" pb={5}>
           <FormControl>
             <RadioGroup aria-labelledby="demo-controlled-radio-buttons-group" name="quiz_result" value={value} onChange={handleRadioChange}>
-              {quizState[quizIndex].attributes.quiz_choices.map((choice: QuizChoiceAttributes, index: any) => (
+              {quiz[quizIndex].attributes.quiz_choices.map((choice: QuizChoiceAttributes, index: any) => (
                 <FormControlLabel
                   key={index}
                   sx={{
@@ -65,7 +64,7 @@ export const Question: FC = memo(() => {
           </FormControl>
         </Grid>
         <Grid item xs={10} textAlign="center">
-          <QuestionButton quizIndex={quizIndex} setQuizIndex={handleQuizIndexChange} setValue={setValue} answers={answers} />
+          <QuizButton quizIndex={quizIndex} setQuizIndex={handleQuizIndexChange} setValue={setValue} answers={answers} />
         </Grid>
       </Grid>
     </Box>
