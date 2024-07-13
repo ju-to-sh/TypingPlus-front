@@ -52,7 +52,7 @@ export const QuestionResult: FC = memo(() => {
         </Grid>
       </Grid>
       <Box sx={{ position: "fixed", bottom: "40px", right: "40px" }}>
-        <Button variant="contained" color="primary" component={RouterLink} to="/game_list">
+        <Button variant="contained" color="primary" component={RouterLink} to="/quizzes">
           問題一覧へ
         </Button>
       </Box>
