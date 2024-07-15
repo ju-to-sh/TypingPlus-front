@@ -6,6 +6,7 @@ import { useApi } from "../../../hooks/useApi";
 import { useSetRecoilState } from "recoil";
 import { userInfoState } from "../../../store/userInfoState";
 import { UserAttributes } from "../../../types/api/user";
+import { useParams } from "react-router-dom";
 
 type Input = {
   nickname: string;
@@ -17,6 +18,7 @@ type Props = {
 };
 
 export const NicknameForm: FC<Props> = memo((props) => {
+  const { id } = useParams();
   const { onClose, messageFlag } = props;
   const {
     register,
@@ -24,11 +26,11 @@ export const NicknameForm: FC<Props> = memo((props) => {
     reset,
     formState: { errors },
   } = useForm<Input>();
-  const setUser = useSetRecoilState(userInfoState);
+  const setUser = useSetRecoilState(userInfoState(id as string));
 
   const onSubmit: SubmitHandler<Input> = async (data: Input) => {
     try {
-      await useApi.patch("/user", { user: data });
+      await useApi.patch(`/users/${id}`, { user: data });
       setUser((prevUser: UserAttributes) => ({
         ...prevUser,
         nickname: data.nickname,

@@ -11,11 +11,14 @@ import { useApi } from "../../hooks/useApi";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { flashState } from "../../store/flashState";
+import { useRecoilValue } from "recoil";
+import { userIdState } from "../../store/userIdState";
 
 export const UserMenu: FC = memo(() => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [, , removeCookie] = useCookies(["accesstoken"]);
+  const userId = useRecoilValue(userIdState);
 
   const navigate = useNavigate();
   const setFlash = useSetRecoilState(flashState);
@@ -52,7 +55,7 @@ export const UserMenu: FC = memo(() => {
         }}
       >
         <MenuItem onClick={handleClose}>
-          <Link component={RouterLink} to="/profile" underline="none" color="#333">
+          <Link component={RouterLink} to={`/users/${userId}`} underline="none" color="#333">
             マイページ
           </Link>
         </MenuItem>

@@ -6,6 +6,7 @@ import { userInfoState } from "../../../store/userInfoState";
 import { UploadButton } from "../../molecules/UploadButton";
 import { useFormData } from "../../../hooks/useFormData";
 import { UserAttributes } from "../../../types/api/user";
+import { useParams } from "react-router-dom";
 
 type Input = {
   avatar: string;
@@ -17,9 +18,10 @@ type Props = {
 };
 
 export const ProfileImageForm: FC<Props> = memo((props) => {
+  const { id } = useParams();
   const { onClose, messageFlag } = props;
   const { handleSubmit, reset } = useForm<Input>();
-  const [user, setUser] = useRecoilState(userInfoState);
+  const [user, setUser] = useRecoilState(userInfoState(id as string));
   const [selectedFile, setSelectedFile] = useState<File>();
 
   const onSubmit: SubmitHandler<Input> = async () => {
@@ -27,7 +29,7 @@ export const ProfileImageForm: FC<Props> = memo((props) => {
       if (selectedFile) {
         const formData = new FormData();
         formData.append("user[avatar]", selectedFile);
-        await useFormData.patch("/user", formData).then((res) =>
+        await useFormData.patch(`/users/${id}`, formData).then((res) =>
           setUser((prevUser: UserAttributes) => ({
             ...prevUser,
             avatar: { url: res.data.data.attributes.avatar.url },
@@ -49,7 +51,11 @@ export const ProfileImageForm: FC<Props> = memo((props) => {
       {user.avatar.url ? (
         <Avatar alt="Profile Image" src={user.avatar.url} sx={{ width: 60, height: 60, margin: "auto", marginBottom: "16px" }} />
       ) : (
-        <Avatar alt="Profile Image" src="" sx={{ width: 60, height: 60, margin: "auto", marginBottom: "16px" }} />
+        <Avatar
+          alt="Profile Default Image"
+          src="https://rails-avatar-bucket.s3.ap-northeast-1.amazonaws.com/uploads/content_image/default-user.png"
+          sx={{ width: 60, height: 60, margin: "auto", marginBottom: "16px" }}
+        />
       )}
       <Stack direction="row" spacing={2} alignItems="center" justifyContent="center" mb="16px">
         {user.avatar.url ? (

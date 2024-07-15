@@ -1,18 +1,20 @@
-import { atom, selector } from "recoil";
+import { atomFamily, selectorFamily } from "recoil";
 import { useApi } from "../hooks/useApi";
 import { User } from "../types/api/user";
 
-export const userInfoState = atom<User | any>({
+export const userInfoQuery = selectorFamily({
+  key: "userInfoQuery",
+  get: (id: string) => async () => {
+    try {
+      const response = await useApi.get<User>(`/users/${id}`);
+      return response.data.data.attributes;
+    } catch (error) {
+      throw error;
+    }
+  },
+});
+
+export const userInfoState = atomFamily<any, string>({
   key: "userInfoState",
-  default: selector({
-    key: "userQuery",
-    get: async ({ get }) => {
-      try {
-        const response = await useApi.get<User>("/user");
-        return response.data.data.attributes;
-      } catch (error) {
-        throw error;
-      }
-    },
-  }),
+  default: (id: string) => userInfoQuery(id),
 });
