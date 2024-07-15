@@ -46,7 +46,7 @@ export const Router = memo(() => {
         />
         <Route path="/policy" element={<PrivacyPolicy />} />
         <Route path="/term" element={<TermsOfService />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/users/:id" element={<Profile />} />
         <Route
           path="/games"
           element={

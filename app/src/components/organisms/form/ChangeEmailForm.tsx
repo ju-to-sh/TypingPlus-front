@@ -4,6 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { userInfoState } from "../../../store/userInfoState";
 import { useRecoilValue } from "recoil";
+import { useParams } from "react-router-dom";
 
 type Input = {
   email?: string;
@@ -14,6 +15,7 @@ type Props = {
 };
 
 export const ChangeEmailForm: FC<Props> = memo((props) => {
+  const { id } = useParams();
   const { onClose } = props;
   const {
     register,
@@ -23,17 +25,10 @@ export const ChangeEmailForm: FC<Props> = memo((props) => {
   } = useForm<Input>();
 
   const onSubmit: SubmitHandler<Input> = (data: Input) => {
-    // useApi
-    //   .post("/", { user: data })
-    //   .then(() => {
-    //     reset();
-    //   })
-    //   .catch((error) => console.log(process.env.REACT_APP_BASE_URL));
-    console.log("hello");
     reset();
     onClose();
   };
-  const user = useRecoilValue(userInfoState);
+  const user = useRecoilValue(userInfoState(id as string));
 
   return (
     <Stack component="form" noValidate onSubmit={handleSubmit(onSubmit)}>

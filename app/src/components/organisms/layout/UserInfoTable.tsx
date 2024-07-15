@@ -1,18 +1,31 @@
-import { FC, memo, useState } from "react";
+import { FC, memo, useEffect, useState } from "react";
 import { Alert, Snackbar, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { UserInfo } from "../user/UserInfo";
 import { userInfoState } from "../../../store/userInfoState";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
+import { useParams } from "react-router-dom";
+import { useApi } from "../../../hooks/useApi";
+import { User } from "../../../types/api/user";
 
 export const UserInfoTable: FC = memo(() => {
-  const user = useRecoilValue(userInfoState);
+  const { id } = useParams();
+  const [user, setUser] = useRecoilState(userInfoState(id as string));
   const [open, setOpen] = useState(false);
+
   const handleClose = (reason: any) => {
     if (reason === "clickaway") {
       return;
     }
     setOpen(false);
   };
+  const fetchData = async () => {
+    const response = await useApi.get<User>(`/users/${id}`);
+    setUser(response.data.data.attributes);
+  };
+  
+  useEffect(() => {
+    fetchData();
+  }, [id]);
 
   return (
     <>
