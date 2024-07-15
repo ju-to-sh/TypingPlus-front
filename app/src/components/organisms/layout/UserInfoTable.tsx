@@ -22,7 +22,7 @@ export const UserInfoTable: FC = memo(() => {
     const response = await useApi.get<User>(`/users/${id}`);
     setUser(response.data.data.attributes);
   };
-  console.log(user);
+  
   useEffect(() => {
     fetchData();
   }, [id]);
