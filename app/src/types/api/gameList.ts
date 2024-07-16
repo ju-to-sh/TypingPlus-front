@@ -13,9 +13,20 @@ export type GameListData = {
 };
 
 export type GameLists = {
-  data: GameListData[];
+  data: Array<GameListsData>;
 };
 
 export type GameList = {
   data: GameListData;
 };
+
+export type GameListsData = {
+  id: string;
+  type: string;
+  attributes: GameListAttributes;
+  relationships: Relationships;
+};
+
+export type Relationships = {
+  quizzes: Array<Object>
+}

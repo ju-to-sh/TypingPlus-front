@@ -3,12 +3,12 @@ import { FC, memo } from "react";
 import { useRecoilValue } from "recoil";
 import { QuizCard } from "../organisms/quiz/QuizCard";
 import { gameListState } from "../../store/gameListState";
-import { GameListData } from "../../types/api/gameList";
+import { GameListsData } from "../../types/api/gameList";
 import { useLocation } from "react-router-dom";
 
 export const GameList: FC = memo(() => {
   const location = useLocation();
-  const gameLists = useRecoilValue(gameListState({ path: location.pathname }));
+  const gameLists = useRecoilValue(gameListState(location.pathname as string));
 
   return (
     <Grid container direction="row" sx={{ minWidth: 600, maxWidth: 1000 }} margin="0 auto" p={3} justifyContent="center" alignItems="center">
@@ -25,7 +25,7 @@ export const GameList: FC = memo(() => {
           )}
         </Grid>
         <Grid item sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-          {gameLists.map((gameList: GameListData) => (
+          {gameLists.map((gameList: GameListsData) => (
             <Box key={gameList.id} p={1}>
               <QuizCard
                 id={gameList.id}
