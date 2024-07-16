@@ -8,7 +8,9 @@ export const Header: FC = memo(() => {
     <AppBar component="header" position="fixed" style={{ backgroundColor: "#ffeded", borderBottom: "2px solid #c52f24" }}>
       <Box mt={1} mr={2} ml={2}>
         <Stack direction="row" justifyContent="space-between" alignItems="center">
-          <Logo width={220} />
+          <Link component={RouterLink} to="/">
+            <Logo width={220} />
+          </Link>
           <Stack lineHeight="70px" direction="row" justifyContent="flex-center" alignItems="center" spacing={3}>
             <Link component={RouterLink} to="/games" underline="hover">
               <div>ゲーム選択</div>
