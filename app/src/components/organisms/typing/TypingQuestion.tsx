@@ -46,8 +46,8 @@ export const TypingQuestion: FC = memo(() => {
     }
   };
 
-  const CPM = (seconds: number, length: number) => length / (seconds / 60);
-  const ScoreCalculate = (typeSpeed: number, missType: number) => typeSpeed - missType;
+  const CPM = (seconds: number, length: number) => Math.round(length / (seconds / 60));
+  const ScoreCalculate = (typeSpeed: number, missType: number) => Math.round(typeSpeed - missType * 0.5);
 
   const handleKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -154,7 +154,13 @@ export const TypingQuestion: FC = memo(() => {
       <Button variant="contained" color="primary" onClick={ResetAll}>
         やり直す
       </Button>
-      <SuccessModal onClick={ResetAll} open={open} missType={typingInfo.missCount} speed={CPM(totalSeconds, totalLength)} />
+      <SuccessModal
+        onClick={ResetAll}
+        open={open}
+        missType={typingInfo.missCount}
+        speed={CPM(totalSeconds, totalLength)}
+        score={ScoreCalculate(CPM(totalSeconds, totalLength), typingInfo.missCount)}
+      />
     </>
   );
 });
