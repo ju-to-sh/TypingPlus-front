@@ -10,6 +10,9 @@ export const Header: FC = memo(() => {
         <Stack direction="row" justifyContent="space-between" alignItems="center">
           <Logo width={220} />
           <Stack lineHeight="70px" direction="row" justifyContent="flex-center" alignItems="center" spacing={3}>
+            <Link component={RouterLink} to="/games" underline="hover">
+              <div>ゲーム選択</div>
+            </Link>
             <Link component={RouterLink} to="/signup" underline="hover">
               <div>新規会員登録</div>
             </Link>

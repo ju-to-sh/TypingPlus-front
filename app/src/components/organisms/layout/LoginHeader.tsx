@@ -1,6 +1,7 @@
 import { FC, memo } from "react";
 import { AppBar, Box, Stack } from "@mui/material";
-
+import { Link as RouterLink } from "react-router-dom";
+import { Link } from "@mui/material";
 import { Logo } from "../../atoms/Logo";
 import { UserMenu } from "../../molecules/UserMenu";
 
@@ -11,6 +12,9 @@ export const LoginHeader: FC = memo(() => {
         <Stack direction="row" justifyContent="space-between" alignItems="center">
           <Logo width={220} />
           <Stack lineHeight="70px" direction="row" justifyContent="flex-center" alignItems="center" spacing={3}>
+            <Link component={RouterLink} to="/games" underline="hover">
+              <div>ゲーム選択</div>
+            </Link>
             <UserMenu />
           </Stack>
         </Stack>
