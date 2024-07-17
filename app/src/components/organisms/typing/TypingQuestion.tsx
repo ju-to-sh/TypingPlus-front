@@ -1,6 +1,6 @@
 import { FC, memo, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { typingState } from "../../../store/typingState";
 import { typingInfoState } from "../../../store/typingInfoState";
 import { Box, Button, Grid, Typography } from "@mui/material";
@@ -11,8 +11,8 @@ import { SuccessModal } from "./SuccessModal";
 import { useApi } from "../../../hooks/useApi";
 
 export const TypingQuestion: FC = memo(() => {
-  const param = useParams();
-  const typingGames = useRecoilValue(typingState({ id: param.id }));
+  const { id } = useParams();
+  const [typingGames, setTypingGames] = useRecoilState(typingState(id as string));
   const [questionIndex, setQuestionIndex] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [typingString, setTypingString] = useState(typingGames[questionIndex]);
@@ -58,7 +58,7 @@ export const TypingQuestion: FC = memo(() => {
         type_speed: CPM(totalSeconds, totalLength),
         miss_type: typingInfo.missCount,
         score: ScoreCalculate(CPM(totalSeconds, totalLength), typingInfo.missCount),
-        game_list_id: Number(param.id),
+        game_list_id: Number(id),
       };
       useApi
         .post("/typing_game_results", { typing_game_result: typingResult })
