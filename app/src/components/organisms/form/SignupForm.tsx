@@ -5,6 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { useApi } from "../../../hooks/useApi";
 import { useCookies } from "react-cookie";
+import _ from "lodash";
 
 type Inputs = {
   nickname: string;
@@ -25,8 +26,10 @@ export const SignupForm: FC = memo(() => {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
+    const snakeCasedData = _.mapKeys(data, (value, key) => _.snakeCase(key));
+
     useApi
-      .post("/registration", { user: data })
+      .post("/registration", { user: snakeCasedData })
       .then((res) => {
         const accessToken = res.headers["accesstoken"];
         if (accessToken) {
