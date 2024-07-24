@@ -37,4 +37,17 @@ export const useStyles = makeStyles(() => ({
     padding: "16px",
     outline: "none",
   },
+  customList: {
+    "&.MuiList-root": {
+      listStyleType: "decimal",
+      "& .MuiListItem-root": {
+        display: "list-item",
+        marginLeft: "30px",
+      },
+    },
+  },
+  underLine: {
+    borderLeft: "4px solid #c1bbbb",
+    paddingLeft: "8px",
+  },
 }));
