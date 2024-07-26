@@ -2,8 +2,12 @@ import { FC, memo } from "react";
 import { AppBar, Box, Link, Stack } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { Logo } from "../../atoms/Logo";
+import { useCookies } from "react-cookie";
+import { UserMenu } from "../../molecules/UserMenu";
 
 export const Header: FC = memo(() => {
+  const [cookie] = useCookies(["accesstoken"]);
+
   return (
     <AppBar component="header" position="fixed" style={{ backgroundColor: "#ffeded", borderBottom: "2px solid #c52f24" }}>
       <Box mt={1} mr={2} ml={2}>
@@ -18,12 +22,21 @@ export const Header: FC = memo(() => {
             <Link component={RouterLink} to="/ranking" underline="hover">
               <div>ランキング一覧</div>
             </Link>
-            <Link component={RouterLink} to="/signup" underline="hover">
-              <div>新規会員登録</div>
+            <Link component={RouterLink} to="/ranking" underline="hover">
+              <div>問題検索</div>
             </Link>
-            <Link component={RouterLink} to="/login" underline="hover">
-              <div>ログイン</div>
-            </Link>
+            {cookie.accesstoken ? (
+              <UserMenu />
+            ) : (
+              <>
+                <Link component={RouterLink} to="/signup" underline="hover">
+                  <div>新規会員登録</div>
+                </Link>
+                <Link component={RouterLink} to="/login" underline="hover">
+                  <div>ログイン</div>
+                </Link>
+              </>
+            )}
           </Stack>
         </Stack>
       </Box>
