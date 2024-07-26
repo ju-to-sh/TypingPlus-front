@@ -15,6 +15,7 @@ import { Page404 } from "../components/pages/Page404";
 import { memo } from "react";
 import { DefaultLayout } from "../components/template/DefaultLayout";
 import { CenterLayout } from "../components/template/CenterLayout";
+import { Ranking } from "../components/pages/Ranking";
 
 export const Router = memo(() => {
   return (
@@ -83,6 +84,14 @@ export const Router = memo(() => {
           element={
             <DefaultLayout>
               <GameList />
+            </DefaultLayout>
+          }
+        />
+        <Route
+          path="/ranking"
+          element={
+            <DefaultLayout>
+              <Ranking />
             </DefaultLayout>
           }
         />

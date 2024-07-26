@@ -17,6 +17,9 @@ export const LoginHeader: FC = memo(() => {
             <Link component={RouterLink} to="/games" underline="hover">
               <div>ゲーム選択</div>
             </Link>
+            <Link component={RouterLink} to="/ranking" underline="hover">
+              <div>ランキング一覧</div>
+            </Link>
             <UserMenu />
           </Stack>
         </Stack>
