@@ -8,7 +8,6 @@ import { useSetRecoilState } from "recoil";
 import { flashState } from "../../store/flashState";
 import { useRecoilValue } from "recoil";
 import { userIdState } from "../../store/userIdState";
-import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
 import LogoutIcon from "@mui/icons-material/Logout";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 
