@@ -1,39 +1,50 @@
-import { Box, Button, TextField, Stack, FormControlLabel, FormControl, FormLabel, RadioGroup, Radio, InputLabel, Select, MenuItem, SelectChangeEvent } from "@mui/material";
-import { FC, memo, useState } from "react";
+import { Button, TextField, Stack, FormControlLabel, FormControl, FormLabel, RadioGroup, Radio, InputLabel, Select, MenuItem } from "@mui/material";
+import { FC, memo } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useApi } from "../../../hooks/useApi";
+import { GameListsData } from "../../../types/api/gameList";
 
 type Inputs = {
-  title: string;
-  category: number | null;
-  level: number | "";
+  title_cont: string;
+  category_eq: number | null;
+  level_eq: number | "";
 };
 
-export const SearchForm: FC = memo(() => {
-  const { control, handleSubmit } = useForm<Inputs>({ defaultValues: { title: "", category: null, level: "" } });
+type Props = {
+  setGameLists: React.Dispatch<React.SetStateAction<GameListsData[]>>;
+};
+
+export const SearchForm: FC<Props> = memo((props) => {
+  const { setGameLists } = props;
+  const { control, handleSubmit } = useForm<Inputs>({ defaultValues: { title_cont: "", category_eq: null, level_eq: "" } });
 
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
-    // await useApi
-    //   .post("/login", data)
-    //   .then((res) => {})
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-    console.log(`submit: ${data.title}`);
-    console.log(`submit: ${data.category}`);
-    console.log(`submit: ${data.level}`);
+    await useApi
+      .get("/search", {
+        params: {
+          q: { title_cont: data.title_cont, category_eq: data.category_eq, level_eq: data.level_eq },
+        },
+      })
+      .then((res) => {
+        setGameLists(res.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
     <Stack component="form" noValidate onSubmit={handleSubmit(onSubmit)} direction="row" spacing={3} alignItems="center" justifyContent="center">
-      <Controller name="title" control={control} render={({ field }) => <TextField {...field} label="タイトル名" type="text" margin="dense" />} />
+      <Controller name="title_cont" control={control} render={({ field }) => <TextField {...field} label="タイトル名" type="text" margin="dense" />} />
       <Controller
-        name="category"
+        name="category_eq"
         control={control}
         render={({ field }) => (
           <FormControl>
-            <FormLabel id="radio-buttons-category">カテゴリー</FormLabel>
-            <RadioGroup row aria-labelledby="radio-buttons-category" value={field.value} name="category">
+            <FormLabel id="radio-buttons-category" sx={{ textAlign: "left" }}>
+              カテゴリー
+            </FormLabel>
+            <RadioGroup row aria-labelledby="radio-buttons-category" value={field.value} name="category_eq">
               <FormControlLabel {...field} value={0} control={<Radio />} label="Ruby" />
               <FormControlLabel {...field} value={1} control={<Radio />} label="Rails" />
             </RadioGroup>
@@ -41,7 +52,7 @@ export const SearchForm: FC = memo(() => {
         )}
       />
       <Controller
-        name="level"
+        name="level_eq"
         control={control}
         render={({ field }) => (
           <FormControl sx={{ m: 1, minWidth: 120 }}>
