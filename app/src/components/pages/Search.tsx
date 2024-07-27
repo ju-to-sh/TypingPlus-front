@@ -4,6 +4,7 @@ import { useRecoilValue } from "recoil";
 import { QuizCard } from "../organisms/quiz/QuizCard";
 import { gameListAllState } from "../../store/gameListState";
 import { GameListsData } from "../../types/api/gameList";
+import { SearchForm } from "../organisms/form/SearchForm";
 
 export const Search: FC = memo(() => {
   const gameLists = useRecoilValue(gameListAllState);
@@ -15,6 +16,9 @@ export const Search: FC = memo(() => {
           <Typography variant="h5" gutterBottom>
             クイズ/タイピング問題検索
           </Typography>
+        </Grid>
+        <Grid item xs={12} textAlign="center" pb={3}>
+          <SearchForm />
         </Grid>
         <Grid item sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
           {gameLists.map((gameList: GameListsData) => (
