@@ -6,6 +6,7 @@ import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import SearchIcon from "@mui/icons-material/Search";
 import SaveAsIcon from "@mui/icons-material/SaveAs";
 import LoginIcon from "@mui/icons-material/Login";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { Link as RouterLink } from "react-router-dom";
 import { Logo } from "../../atoms/Logo";
 import { useCookies } from "react-cookie";
@@ -48,7 +49,15 @@ export const Header: FC<Props> = memo((props) => {
           </ListItemButton>
         </ListItem>
         {cookie.accesstoken ? (
-          <DrawerUserMenu />
+          <>
+            <ListItem disablePadding>
+              <ListItemButton sx={{ display: "flex", justifyContent: "center", alignItems: "center" }} component={RouterLink} to="/like">
+                <ThumbUpIcon sx={{ marginRight: "8px", color: "#c52f24" }} />
+                <Link underline="none">お気に入り</Link>
+              </ListItemButton>
+            </ListItem>
+            <DrawerUserMenu />
+          </>
         ) : (
           <>
             <ListItem disablePadding>
@@ -99,7 +108,12 @@ export const Header: FC<Props> = memo((props) => {
                 <div>問題検索</div>
               </Link>
               {cookie.accesstoken ? (
-                <UserMenu />
+                <>
+                  <Link component={RouterLink} to="/like" underline="hover">
+                    <div>お気に入り</div>
+                  </Link>
+                  <UserMenu />
+                </>
               ) : (
                 <>
                   <Link component={RouterLink} to="/signup" underline="hover">
