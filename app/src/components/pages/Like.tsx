@@ -30,7 +30,7 @@ export const Like: FC = memo(() => {
         </Grid>
         <Grid item sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
           {gameLists.map((gameList: GameListsData) => (
-            <Box key={gameList.id} p={1}>
+            <Box id={gameList.id} key={gameList.id} p={1}>
               <QuizCard
                 id={gameList.id}
                 title={gameList.attributes.title}
@@ -38,6 +38,7 @@ export const Like: FC = memo(() => {
                 content={gameList.attributes.content}
                 category={gameList.attributes.category}
                 level={gameList.attributes.level}
+                fetchGameLists={fetchGameLists}
               />
             </Box>
           ))}

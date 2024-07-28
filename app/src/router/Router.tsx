@@ -106,7 +106,7 @@ export const Router = memo(() => {
           }
         />
         <Route
-          path="/like"
+          path="/likes"
           element={
             <DefaultLayout>
               <Like />
