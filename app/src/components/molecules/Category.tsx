@@ -24,13 +24,12 @@ export const Category: FC<Props> = memo((props) => {
   const fetchLikeListIds = useRecoilValue(fetchLikeListIdsSelector);
   const [likeGameLists, setLikeGameLists] = useRecoilState(likeState);
 
-  const LikeHandler = async (id: string) => {
+  const LikeHandler: MouseEventHandler<HTMLButtonElement> = async (event) => {
+    const element = event.currentTarget.closest(".MuiBox-root");
+    const id = element?.getAttribute("id");
     try {
-      await useApi.post("/likes", {
-        params: {
-          game_list_id: id,
-        },
-      });
+      await useApi.post("/likes", { id: id });
+      fetchGameLists && fetchGameLists();
     } catch (error) {
       throw error;
     }
@@ -73,7 +72,7 @@ export const Category: FC<Props> = memo((props) => {
           </ListItemIcon>
         ) : (
           <ListItemIcon>
-            <IconButton onClick={UnlikeHandler}>
+            <IconButton onClick={LikeHandler}>
               <ThumbUpOutlinedIcon sx={{ color: "#f8962f" }} />
             </IconButton>
           </ListItemIcon>
