@@ -8,28 +8,29 @@ import IconButton from "@mui/material/IconButton";
 import { useCookies } from "react-cookie";
 import { useApi } from "../../hooks/useApi";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { fetchLikeListIdsSelector, likeState } from "../../store/likeState";
+import { fetchLikeListIdsSelector, likeListIdsState } from "../../store/likeState";
+import { GameLists } from "../../types/api/gameList";
 
 type Props = {
   gameListId: string;
   level: number;
   category: number | string;
-  fetchGameLists?: () => Promise<void> | undefined;
 };
 
 export const Category: FC<Props> = memo((props) => {
-  const { gameListId, category, level, fetchGameLists } = props;
+  const { gameListId, category, level } = props;
   const MAXLEVEL = 5;
   const [cookie] = useCookies(["accesstoken"]);
   const fetchLikeListIds = useRecoilValue(fetchLikeListIdsSelector);
-  const [likeGameLists, setLikeGameLists] = useRecoilState(likeState);
+  const [likeGameLists, setLikeGameLists] = useRecoilState(likeListIdsState);
 
   const LikeHandler: MouseEventHandler<HTMLButtonElement> = async (event) => {
     const element = event.currentTarget.closest(".MuiBox-root");
     const id = element?.getAttribute("id");
     try {
       await useApi.post("/likes", { id: id });
-      fetchGameLists && fetchGameLists();
+      const response = await useApi.get<GameLists>("/likes");
+      setLikeGameLists(response.data.data.map((data) => data.id));
     } catch (error) {
       throw error;
     }
@@ -39,7 +40,8 @@ export const Category: FC<Props> = memo((props) => {
     const id = element?.getAttribute("id");
     try {
       await useApi.delete(`/likes/${id}`);
-      fetchGameLists && fetchGameLists();
+      const response = await useApi.get<GameLists>("/likes");
+      setLikeGameLists(response.data.data.map((data) => data.id));
     } catch (error) {
       throw error;
     }

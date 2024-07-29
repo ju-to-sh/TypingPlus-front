@@ -1,24 +1,17 @@
 import { Box, Grid, Typography } from "@mui/material";
-import { FC, memo, useEffect, useState } from "react";
+import { FC, memo, useEffect } from "react";
 import { QuizCard } from "../organisms/quiz/QuizCard";
-import { GameListsData, GameLists } from "../../types/api/gameList";
-import { useApi } from "../../hooks/useApi";
+import { GameListsData } from "../../types/api/gameList";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { fetchLikeListsSelector, likeState } from "../../store/likeState";
 
 export const Like: FC = memo(() => {
-  const [gameLists, setGameLists] = useState<Array<GameListsData>>([]);
-
-  const fetchGameLists = async () => {
-    try {
-      const response = await useApi.get<GameLists>("/likes");
-      setGameLists(response.data.data);
-    } catch (error) {
-      throw error;
-    }
-  };
+  const fetchLikeLists = useRecoilValue(fetchLikeListsSelector);
+  const [gameLists, setGameLists] = useRecoilState(likeState);
 
   useEffect(() => {
-    fetchGameLists();
-  }, []);
+    setGameLists(fetchLikeLists);
+  }, [setGameLists, fetchLikeLists]);
 
   return (
     <Grid container direction="row" sx={{ minWidth: 600, maxWidth: 1000 }} margin="0 auto" p={3} justifyContent="center" alignItems="center">
@@ -38,7 +31,6 @@ export const Like: FC = memo(() => {
                 content={gameList.attributes.content}
                 category={gameList.attributes.category}
                 level={gameList.attributes.level}
-                fetchGameLists={fetchGameLists}
               />
             </Box>
           ))}

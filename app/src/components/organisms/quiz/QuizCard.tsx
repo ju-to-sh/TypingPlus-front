@@ -10,11 +10,10 @@ type Props = {
   content: string;
   level: number;
   category: number | string;
-  fetchGameLists?: () => Promise<void> | undefined;
 };
 
 export const QuizCard: FC<Props> = memo((props) => {
-  const { id, title, game_type, content, level, category, fetchGameLists } = props;
+  const { id, title, game_type, content, level, category } = props;
 
   return (
     <Card sx={{ width: "200px", height: "240px", backgroundColor: "#ffeded" }}>
@@ -22,7 +21,7 @@ export const QuizCard: FC<Props> = memo((props) => {
         <Typography variant="h6" component="div">
           {title}
         </Typography>
-        <Category gameListId={id} category={category} level={level} fetchGameLists={fetchGameLists} />
+        <Category gameListId={id} category={category} level={level} />
         <Typography variant="body2">{content}</Typography>
       </CardContent>
       <CardActions sx={{ padding: "0 16px", justifyContent: "center" }}>
