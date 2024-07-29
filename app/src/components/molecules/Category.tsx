@@ -66,18 +66,22 @@ export const Category: FC<Props> = memo((props) => {
             <StarBorderIcon key={index} sx={{ width: "20px", height: "20px" }} />
           ))}
         </ListItemIcon>
-        {cookie.accesstoken && likeGameLists.includes(gameListId) ? (
-          <ListItemIcon>
-            <IconButton onClick={UnlikeHandler}>
-              <ThumbUpIcon sx={{ color: "#f8962f" }} />
-            </IconButton>
-          </ListItemIcon>
+        {cookie.accesstoken ? (
+          likeGameLists.includes(gameListId) ? (
+            <ListItemIcon>
+              <IconButton onClick={UnlikeHandler}>
+                <ThumbUpIcon sx={{ color: "#f8962f" }} />
+              </IconButton>
+            </ListItemIcon>
+          ) : (
+            <ListItemIcon>
+              <IconButton onClick={LikeHandler}>
+                <ThumbUpOutlinedIcon sx={{ color: "#f8962f" }} />
+              </IconButton>
+            </ListItemIcon>
+          )
         ) : (
-          <ListItemIcon>
-            <IconButton onClick={LikeHandler}>
-              <ThumbUpOutlinedIcon sx={{ color: "#f8962f" }} />
-            </IconButton>
-          </ListItemIcon>
+          <></>
         )}
       </ListItem>
     </List>

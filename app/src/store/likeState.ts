@@ -18,7 +18,7 @@ export const fetchLikeListIdsSelector = selector<Array<string>>({
     try {
       const response = await useApi.get<GameLists>("/likes");
       get(likeState)
-      return response.data.data.map((data) => data.id);
+      return response.data.data?.map((data) => data.id);
     } catch (error) {
       throw error;
     }
