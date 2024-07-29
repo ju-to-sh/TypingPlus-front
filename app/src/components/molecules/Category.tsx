@@ -1,4 +1,4 @@
-import { FC, memo, MouseEventHandler } from "react";
+import { FC, memo, MouseEventHandler, useEffect } from "react";
 import { Box, List, ListItem, ListItemIcon } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
@@ -7,17 +7,22 @@ import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import IconButton from "@mui/material/IconButton";
 import { useCookies } from "react-cookie";
 import { useApi } from "../../hooks/useApi";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { fetchLikeListIdsSelector, likeState } from "../../store/likeState";
 
 type Props = {
+  gameListId: string;
   level: number;
   category: number | string;
   fetchGameLists?: () => Promise<void> | undefined;
 };
 
 export const Category: FC<Props> = memo((props) => {
-  const { category, level, fetchGameLists } = props;
+  const { gameListId, category, level, fetchGameLists } = props;
   const MAXLEVEL = 5;
   const [cookie] = useCookies(["accesstoken"]);
+  const fetchLikeListIds = useRecoilValue(fetchLikeListIdsSelector);
+  const [likeGameLists, setLikeGameLists] = useRecoilState(likeState);
 
   const LikeHandler = async (id: string) => {
     try {
@@ -41,6 +46,10 @@ export const Category: FC<Props> = memo((props) => {
     }
   };
 
+  useEffect(() => {
+    setLikeGameLists(fetchLikeListIds);
+  }, []);
+
   return (
     <List sx={{ maxWidth: 180, display: "flex", justifyContent: "left", alignItems: "center", margin: "left" }}>
       <ListItem sx={{ padding: 0 }}>
@@ -56,10 +65,16 @@ export const Category: FC<Props> = memo((props) => {
             <StarBorderIcon key={index} sx={{ width: "20px", height: "20px" }} />
           ))}
         </ListItemIcon>
-        {cookie.accesstoken && (
+        {cookie.accesstoken && likeGameLists.includes(gameListId) ? (
           <ListItemIcon>
             <IconButton onClick={UnlikeHandler}>
               <ThumbUpIcon sx={{ color: "#f8962f" }} />
+            </IconButton>
+          </ListItemIcon>
+        ) : (
+          <ListItemIcon>
+            <IconButton onClick={UnlikeHandler}>
+              <ThumbUpOutlinedIcon sx={{ color: "#f8962f" }} />
             </IconButton>
           </ListItemIcon>
         )}

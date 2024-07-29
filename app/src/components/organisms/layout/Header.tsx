@@ -51,7 +51,7 @@ export const Header: FC<Props> = memo((props) => {
         {cookie.accesstoken ? (
           <>
             <ListItem disablePadding>
-              <ListItemButton sx={{ display: "flex", justifyContent: "center", alignItems: "center" }} component={RouterLink} to="/like">
+              <ListItemButton sx={{ display: "flex", justifyContent: "center", alignItems: "center" }} component={RouterLink} to="/likes">
                 <ThumbUpIcon sx={{ marginRight: "8px", color: "#c52f24" }} />
                 <Link underline="none">お気に入り</Link>
               </ListItemButton>
@@ -109,7 +109,7 @@ export const Header: FC<Props> = memo((props) => {
               </Link>
               {cookie.accesstoken ? (
                 <>
-                  <Link component={RouterLink} to="/like" underline="hover">
+                  <Link component={RouterLink} to="/likes" underline="hover">
                     <div>お気に入り</div>
                   </Link>
                   <UserMenu />
