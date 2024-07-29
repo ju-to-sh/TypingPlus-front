@@ -21,7 +21,7 @@ export const QuizCard: FC<Props> = memo((props) => {
         <Typography variant="h6" component="div">
           {title}
         </Typography>
-        <Category category={category} level={level} />
+        <Category gameListId={id} category={category} level={level} />
         <Typography variant="body2">{content}</Typography>
       </CardContent>
       <CardActions sx={{ padding: "0 16px", justifyContent: "center" }}>

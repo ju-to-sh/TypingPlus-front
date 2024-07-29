@@ -7,7 +7,7 @@ import { Rank } from "../../atoms/Rank";
 
 export const AvatarList: FC = memo(() => {
   const rankingInfo = useRecoilValue(rankingInfoState);
-  console.log(rankingInfo.included);
+
   return (
     <List sx={{ width: "100%", maxWidth: 800, padding: 0 }}>
       {rankingInfo.data.map((info: RankingData, index: number) => (

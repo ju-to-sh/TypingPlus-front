@@ -17,6 +17,7 @@ import { DefaultLayout } from "../components/template/DefaultLayout";
 import { CenterLayout } from "../components/template/CenterLayout";
 import { Ranking } from "../components/pages/Ranking";
 import { Search } from "../components/pages/Search";
+import { Like } from "../components/pages/Like";
 
 export const Router = memo(() => {
   return (
@@ -101,6 +102,14 @@ export const Router = memo(() => {
           element={
             <DefaultLayout>
               <Search />
+            </DefaultLayout>
+          }
+        />
+        <Route
+          path="/likes"
+          element={
+            <DefaultLayout>
+              <Like />
             </DefaultLayout>
           }
         />
