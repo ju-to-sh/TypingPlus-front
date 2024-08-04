@@ -18,6 +18,7 @@ import { CenterLayout } from "../components/template/CenterLayout";
 import { Ranking } from "../components/pages/Ranking";
 import { Search } from "../components/pages/Search";
 import { Like } from "../components/pages/Like";
+import { PasswordReset } from "../components/pages/PasswordReset";
 
 export const Router = memo(() => {
   return (
@@ -36,6 +37,14 @@ export const Router = memo(() => {
           element={
             <CenterLayout>
               <Login />
+            </CenterLayout>
+          }
+        />
+        <Route
+          path="/password_resets"
+          element={
+            <CenterLayout>
+              <PasswordReset />
             </CenterLayout>
           }
         />
