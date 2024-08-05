@@ -7,7 +7,6 @@ import { Question } from "../components/pages/Question";
 import { GameList } from "../components/pages/GameList";
 import { Signup } from "../components/pages/Signup";
 import { Typing } from "../components/pages/Typing";
-import { TypingResult } from "../components/pages/TypingResult";
 import { QuestionResult } from "../components/pages/QuestionResult";
 import { Games } from "../components/pages/Games";
 import { TermsOfService } from "../components/pages/TermsOfService";
