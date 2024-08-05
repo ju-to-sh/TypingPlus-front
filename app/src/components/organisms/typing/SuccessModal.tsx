@@ -1,7 +1,7 @@
 import { Backdrop, Box, Button, Fade, Modal, Stack, Typography } from "@mui/material";
 import { FC, memo } from "react";
 import { useStyles } from "../../../hooks/useStyles";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 
 type Props = {
   onClick: () => void;
@@ -14,6 +14,7 @@ type Props = {
 export const SuccessModal: FC<Props> = memo((props) => {
   const { onClick, open, missType, speed, score } = props;
   const classes = useStyles();
+  const location = useLocation();
 
   return (
     <>
@@ -45,6 +46,22 @@ export const SuccessModal: FC<Props> = memo((props) => {
               </Button>
               <Button variant="contained" color="primary" onClick={onClick}>
                 もう一度解く
+              </Button>
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: "#0F1419",
+                  color: "#FFFFFF",
+                  "&:hover": {
+                    backgroundColor: "#0F1419",
+                    opacity: 0.7,
+                    color: "#FFFFFF",
+                  },
+                }}
+                component={RouterLink}
+                to={`https://x.com/intent/post?text=[Typing Plus]タイピング速度:${speed}、ミスタイプ:${missType}回でした!&url=https://typing-plus-front.vercel.app${location.pathname}`}
+              >
+                Xに投稿
               </Button>
             </Stack>
           </Box>
