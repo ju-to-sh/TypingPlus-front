@@ -59,6 +59,11 @@ export const UserMenu: FC = memo(() => {
             マイページ
           </Link>
         </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <Link component={RouterLink} to={`/users/${userId}/study_records`} underline="none" color="#333">
+            学習記録
+          </Link>
+        </MenuItem>
         <MenuItem onClick={LogoutHandler}>ログアウト</MenuItem>
       </Menu>
     </>
