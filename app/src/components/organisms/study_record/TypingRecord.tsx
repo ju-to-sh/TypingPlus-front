@@ -20,7 +20,6 @@ export const TypingRecord: FC = memo(() => {
   const { id } = useParams();
   const fetchTyping = useRecoilValue(fetchtTypingResultSelector(id as string));
   const [typingResult, setTypingResult] = useRecoilState(typingResultState(id as string));
-  // console.log(typingResult);
 
   useEffect(() => {
     setTypingResult(fetchTyping);

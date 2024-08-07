@@ -10,6 +10,7 @@ import { useRecoilValue } from "recoil";
 import { userIdState } from "../../store/userIdState";
 import LogoutIcon from "@mui/icons-material/Logout";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 
 export const DrawerUserMenu: FC = memo(() => {
   const [, , removeCookie] = useCookies(["accesstoken"]);
@@ -31,6 +32,12 @@ export const DrawerUserMenu: FC = memo(() => {
         <ListItemButton sx={{ display: "flex", justifyContent: "center", alignItems: "center" }} component={RouterLink} to={`/users/${userId}`}>
           <ManageAccountsIcon sx={{ marginRight: "8px", color: "#c52f24" }} />
           <Link underline="none">マイページ</Link>
+        </ListItemButton>
+      </ListItem>
+      <ListItem disablePadding>
+        <ListItemButton sx={{ display: "flex", justifyContent: "center", alignItems: "center" }} component={RouterLink} to={`/users/${userId}/study_records`}>
+          <AutoGraphIcon sx={{ marginRight: "8px", color: "#c52f24" }} />
+          <Link underline="none">学習記録</Link>
         </ListItemButton>
       </ListItem>
       <ListItem disablePadding>
