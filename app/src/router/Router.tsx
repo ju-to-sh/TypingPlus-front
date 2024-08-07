@@ -19,6 +19,7 @@ import { Search } from "../components/pages/Search";
 import { Like } from "../components/pages/Like";
 import { PasswordReset } from "../components/pages/PasswordReset";
 import { ChangePassword } from "../components/pages/ChangePassword";
+import { StudyRecord } from "../components/pages/StudyRecord";
 
 export const Router = memo(() => {
   return (
@@ -81,6 +82,7 @@ export const Router = memo(() => {
           }
         />
         <Route path="/users/:id" element={<Profile />} />
+        <Route path="/users/:id/study_records" element={<StudyRecord />} />
         <Route
           path="/games"
           element={
