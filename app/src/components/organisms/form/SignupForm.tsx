@@ -6,6 +6,8 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useApi } from "../../../hooks/useApi";
 import { useCookies } from "react-cookie";
 import _ from "lodash";
+import { userIdState } from "../../../store/userIdState";
+import { useSetRecoilState } from "recoil";
 
 type Inputs = {
   nickname: string;
@@ -17,6 +19,7 @@ type Inputs = {
 export const SignupForm: FC = memo(() => {
   const [registrationFlag, setRegistrationFlag] = useState(false);
   const [cookie, setCookie] = useCookies<string>(["accesstoken"]);
+  const setUserId = useSetRecoilState(userIdState);
   const {
     register,
     handleSubmit,
@@ -34,6 +37,7 @@ export const SignupForm: FC = memo(() => {
         const accessToken = res.headers["accesstoken"];
         if (accessToken) {
           setCookie("accesstoken", accessToken);
+          setUserId(res.data.data.id);
           reset();
           setRegistrationFlag(false);
           navigate("/games", { state: { message: "ユーザー登録が完了しました" } });
