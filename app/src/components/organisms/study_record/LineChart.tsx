@@ -95,13 +95,6 @@ export const LineChart: FC<Props> = memo((props) => {
         grid: {
           display: false,
         },
-        ticks: {
-          autoSkip: true,
-          maxTicksLimit: 10,
-          callback: function (value: number) {
-            return Math.round(value);
-          },
-        },
         title: {
           display: true,
           text: "実施回数",
