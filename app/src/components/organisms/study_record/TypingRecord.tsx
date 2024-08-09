@@ -5,7 +5,6 @@ import { FC, memo, useEffect } from "react";
 import { fetchtTypingResultSelector, typingResultState } from "../../../store/typingInfoState";
 import { useParams } from "react-router-dom";
 import { styled } from "@mui/material/styles";
-import { Chart, registerables, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
 import { LineChart } from "./LineChart";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -23,13 +22,13 @@ const divStyle: React.CSSProperties = {
   marginRight: "auto",
   margin: "10px",
   width: "100%",
+  height: "300px",
 };
 
 export const TypingRecord: FC = memo(() => {
   const { id } = useParams();
   const fetchTyping = useRecoilValue(fetchtTypingResultSelector(id as string));
   const [typingResult, setTypingResult] = useRecoilState(typingResultState(id as string));
-  console.log(typingResult);
 
   useEffect(() => {
     setTypingResult(fetchTyping);

@@ -1,10 +1,10 @@
 import { Line } from "react-chartjs-2";
-import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, Title, Tooltip, Legend } from "chart.js";
+import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, Title, Tooltip, Legend, PointElement } from "chart.js";
 import { FC, memo } from "react";
 import { TypingResultAttributes, TypingResultData } from "../../../types/api/typing";
 import _ from "lodash";
 
-ChartJS.register(LineElement, CategoryScale, LinearScale, Title, Tooltip, Legend);
+ChartJS.register(LineElement, CategoryScale, LinearScale, Title, Tooltip, Legend, PointElement);
 
 type Props = {
   data: Array<TypingResultData>;
@@ -92,21 +92,44 @@ export const LineChart: FC<Props> = memo((props) => {
     scales: {
       x: {
         display: true,
+        grid: {
+          display: false,
+        },
+        ticks: {
+          autoSkip: true,
+          maxTicksLimit: 10,
+          callback: function (value: number) {
+            return Math.round(value);
+          },
+        },
         title: {
           display: true,
           text: "実施回数",
         },
       },
       y: {
+        grid: {
+          display: false,
+        },
         beginAtZero: true,
       },
       y1: {
         display: true,
+        grid: {
+          display: false,
+        },
         beginAtZero: true,
         position: "right",
         title: {
           display: true,
           text: "ミスタイプ回数",
+        },
+        ticks: {
+          autoSkip: true,
+          maxTicksLimit: 10,
+          callback: function (value: number) {
+            return Math.round(value);
+          },
         },
       },
     },
@@ -115,5 +138,5 @@ export const LineChart: FC<Props> = memo((props) => {
       yAxisKey: "type_speed",
     },
   };
-  return <Line data={chartData} options={options} />;
+  return <Line key={JSON.stringify(data)} data={chartData} options={options} />;
 });
