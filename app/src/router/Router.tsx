@@ -82,7 +82,14 @@ export const Router = memo(() => {
           }
         />
         <Route path="/users/:id" element={<Profile />} />
-        <Route path="/users/:id/study_records" element={<StudyRecord />} />
+        <Route
+          path="/users/:id/study_records"
+          element={
+            <DefaultLayout>
+              <StudyRecord />
+            </DefaultLayout>
+          }
+        />
         <Route
           path="/games"
           element={
