@@ -1,10 +1,10 @@
 import { atom, selector } from "recoil";
 import { useApi } from "../hooks/useApi";
-import { GameLists, GameListsData } from "../types/api/gameList";
+import { GameLists } from "../types/api/gameList";
 
-export const likeState = atom<Array<GameListsData>>({
+export const likeState = atom<GameLists>({
   key: "likeState",
-  default: [],
+  default: { data: [] },
 });
 
 export const likeListIdsState = atom<Array<string>>({
@@ -17,7 +17,7 @@ export const fetchLikeListIdsSelector = selector<Array<string>>({
   get: async ({ get }) => {
     try {
       const response = await useApi.get<GameLists>("/likes");
-      get(likeState)
+      get(likeState);
       return response.data.data?.map((data) => data.id);
     } catch (error) {
       throw error;
@@ -25,13 +25,13 @@ export const fetchLikeListIdsSelector = selector<Array<string>>({
   },
 });
 
-export const fetchLikeListsSelector = selector<Array<GameListsData>>({
+export const fetchLikeListsSelector = selector({
   key: "fetchLikeListsSelector",
   get: async ({ get }) => {
     try {
       const response = await useApi.get<GameLists>("/likes");
-      get(likeListIdsState)
-      return response.data.data;
+      get(likeListIdsState);
+      return response.data;
     } catch (error) {
       throw error;
     }
