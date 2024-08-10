@@ -22,18 +22,24 @@ export const Like: FC = memo(() => {
           </Typography>
         </Grid>
         <Grid item sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-          {gameLists.map((gameList: GameListsData) => (
-            <Box id={gameList.id} key={gameList.id} p={1}>
-              <QuizCard
-                id={gameList.id}
-                title={gameList.attributes.title}
-                game_type={gameList.attributes.game_type}
-                content={gameList.attributes.content}
-                category={gameList.attributes.category}
-                level={gameList.attributes.level}
-              />
-            </Box>
-          ))}
+          {gameLists.data.length === 0 ? (
+            <Typography>お気に入り登録した問題はありません</Typography>
+          ) : (
+            <>
+              {gameLists.data.map((gameList: GameListsData) => (
+                <Box id={gameList.id} key={gameList.id} p={1}>
+                  <QuizCard
+                    id={gameList.id}
+                    title={gameList.attributes.title}
+                    game_type={gameList.attributes.game_type}
+                    content={gameList.attributes.content}
+                    category={gameList.attributes.category}
+                    level={gameList.attributes.level}
+                  />
+                </Box>
+              ))}
+            </>
+          )}
         </Grid>
       </Box>
     </Grid>

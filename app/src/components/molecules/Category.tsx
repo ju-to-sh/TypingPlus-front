@@ -67,7 +67,7 @@ export const Category: FC<Props> = memo((props) => {
           ))}
         </ListItemIcon>
         {cookie.accesstoken ? (
-          likeGameLists.includes(gameListId) ? (
+          likeGameLists?.includes(gameListId) ? (
             <ListItemIcon>
               <IconButton onClick={UnlikeHandler}>
                 <ThumbUpIcon sx={{ color: "#f8962f" }} />
