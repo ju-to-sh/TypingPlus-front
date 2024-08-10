@@ -47,13 +47,13 @@ export const LineChart: FC<Props> = memo((props) => {
     type: "Line",
     datasets: [
       {
-        label: "タイピング速度(wpm)",
+        label: "速度(wpm)",
         data: TypingSpeedArray(typingData),
         borderColor: "rgb(83, 221, 106)",
         yAxisID: "y",
       },
       {
-        label: "ミスタイプ回数",
+        label: "ミスタイプ",
         data: TypingMissTypeArray(typingData),
         borderColor: "rgb(97, 131, 242)",
         yAxisID: "y1",
@@ -86,7 +86,7 @@ export const LineChart: FC<Props> = memo((props) => {
     layout: {
       padding: {
         left: 10,
-        right: 50,
+        right: 10,
       },
     },
     scales: {
