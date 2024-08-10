@@ -17,15 +17,13 @@ export const typingResultState = atomFamily<any, any>({
 
 export const fetchtTypingResultSelector = selectorFamily({
   key: "fetchtTypingResultSelector",
-  get:
-    (id: string) =>
-    async ({ get }) => {
-      try {
-        const response = await useApi.get(`/users/${id}/study_records`);
-        get(typingResultState(id));
-        return response.data;
-      } catch (error) {
-        throw error;
-      }
-    },
+  get: (id: string) => async () => {
+    try {
+      const response = await useApi.get(`/users/${id}/study_records`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching typing results:", error);
+      throw error;
+    }
+  },
 });
