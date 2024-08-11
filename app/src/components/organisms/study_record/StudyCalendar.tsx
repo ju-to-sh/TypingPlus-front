@@ -1,12 +1,16 @@
-import { FC, memo } from "react";
+import { FC, memo, useEffect, useRef, useState } from "react";
 import allLocales from "@fullcalendar/core/locales-all";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import listPlugin from '@fullcalendar/list';
+import listPlugin from "@fullcalendar/list";
 import googleCalendarPlugin from "@fullcalendar/google-calendar";
 import styled from "@emotion/styled";
+import { useWindowSize } from "../../../hooks/useWindowSize";
 
 export const StudyCalendar: FC = memo(() => {
+  const width = useWindowSize();
+  const calendarRef = useRef<FullCalendar>(null);
+  const [key, setKey] = useState(0);
   const eventExample = [
     {
       title: "温泉旅行",
@@ -24,18 +28,46 @@ export const StudyCalendar: FC = memo(() => {
     },
   ];
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (calendarRef.current) {
+        calendarRef.current.getApi().updateSize();
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <StyleWrapper>
-      <FullCalendar
-        googleCalendarApiKey={process.env.REACT_APP_GOOGLE_CALENDAR_KEY}
-        eventSources={[{ googleCalendarId: "japanese__ja@holiday.calendar.google.com", backgroundColor: "#ffeded", textColor: "#c52f24", borderColor: "#ffeded" }]}
-        plugins={[dayGridPlugin, googleCalendarPlugin, listPlugin]}
-        initialView="listDay"
-        locales={allLocales}
-        locale="ja"
-        events={eventExample}
-        businessHours={{ daysOfWeek: [1, 2, 3, 4, 5] }}
-      />
+      {width < 700 ? (
+        <FullCalendar
+          ref={calendarRef}
+          googleCalendarApiKey={process.env.REACT_APP_GOOGLE_CALENDAR_KEY}
+          eventSources={[{ googleCalendarId: "japanese__ja@holiday.calendar.google.com", backgroundColor: "#ffeded", textColor: "#c52f24", borderColor: "#ffeded" }]}
+          plugins={[dayGridPlugin, googleCalendarPlugin, listPlugin]}
+          initialView="listDay"
+          locales={allLocales}
+          locale="ja"
+          events={eventExample}
+          businessHours={{ daysOfWeek: [1, 2, 3, 4, 5] }}
+        />
+      ) : (
+        <FullCalendar
+          key={key}
+          ref={calendarRef}
+          windowResize={(view) => {}}
+          googleCalendarApiKey={process.env.REACT_APP_GOOGLE_CALENDAR_KEY}
+          eventSources={[{ googleCalendarId: "japanese__ja@holiday.calendar.google.com", backgroundColor: "#ffeded", textColor: "#c52f24", borderColor: "#ffeded" }]}
+          plugins={[dayGridPlugin, googleCalendarPlugin, listPlugin]}
+          initialView="dayGridMonth"
+          locales={allLocales}
+          locale="ja"
+          events={eventExample}
+          businessHours={{ daysOfWeek: [1, 2, 3, 4, 5] }}
+        />
+      )}
     </StyleWrapper>
   );
 });
