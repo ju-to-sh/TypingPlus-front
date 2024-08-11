@@ -18,14 +18,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-const divStyle: React.CSSProperties = {
-  marginLeft: "auto",
-  marginRight: "auto",
-  margin: "10px",
-  width: "100%",
-  height: "300px",
-};
-
 export const TypingRecord: FC = memo(() => {
   const { id } = useParams();
   const fetchTyping = useRecoilValue(fetchtTypingResultSelector(id as string));

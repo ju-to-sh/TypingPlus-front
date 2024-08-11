@@ -1,6 +1,7 @@
 import { Box, Grid, Typography } from "@mui/material";
 import { FC, memo } from "react";
 import { TypingRecord } from "../organisms/study_record/TypingRecord";
+import { StudyCalendar } from "../organisms/study_record/StudyCalendar";
 
 export const StudyRecord: FC = memo(() => {
   return (
@@ -11,6 +12,11 @@ export const StudyRecord: FC = memo(() => {
             学習記録
           </Typography>
         </Grid>
+        <StudyCalendar />
+        <Box p={4} />
+        <Typography textAlign="center" pb={2}>
+          タイピング実績
+        </Typography>
         <TypingRecord />
       </Box>
     </Grid>
