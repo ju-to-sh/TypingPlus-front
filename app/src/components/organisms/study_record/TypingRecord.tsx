@@ -25,7 +25,10 @@ export const TypingRecord: FC<Props> = memo((props) => {
   return (
     <>
       {typingResult.typing?.length === 0 ? (
-        <Typography>タイピング実績がありません</Typography>
+        <>
+          <Box minWidth="600px"></Box>
+          <Typography textAlign="center">タイピング実績がありません</Typography>
+        </>
       ) : (
         <>
           <Box

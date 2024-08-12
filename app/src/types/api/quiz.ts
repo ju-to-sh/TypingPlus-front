@@ -70,9 +70,20 @@ export type QuizResultData = {
   id: string;
   type: string;
   attributes: QuizResultAttributes;
-}
+};
 
 export type QuizResultAttributes = {
   quiz_id: string;
   select_answer: string;
-}
+};
+
+export type QuizRecord = {
+  id: string;
+  type: string;
+  attributes: QuizRecordAttributes;
+};
+
+export type QuizRecordAttributes = {
+  quiz_id: string;
+  created_at: string;
+};

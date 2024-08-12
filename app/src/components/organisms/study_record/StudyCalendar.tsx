@@ -8,6 +8,7 @@ import styled from "@emotion/styled";
 import { useWindowSize } from "../../../hooks/useWindowSize";
 import { StudyRecord } from "../../../types/api/studyRecord";
 import { TypingResultData } from "../../../types/api/typing";
+import { QuizRecord } from "../../../types/api/quiz";
 
 type Props = {
   typingResult: StudyRecord;
@@ -34,7 +35,26 @@ export const StudyCalendar: FC<Props> = memo((props) => {
   const typingEvent = (data: Array<TypingResultData>) => {
     if (data?.length !== 0) {
       const event = data?.map((ele) => new Date(ele.attributes.created_at).toLocaleDateString("sv-SE"));
-      return Object.keys(DateCount(event)).map((element) => ({ title: `タイピング${DateCount(event)[element]}問`, start: element, backgroundColor: "green", borderColor: "green" }));
+      return Object.keys(DateCount(event)).map((element) => ({ title: `タイピング${DateCount(event)[element]}回`, start: element, backgroundColor: "green", borderColor: "green" }));
+    }
+  };
+
+  const quizEvent = (data: Array<QuizRecord>) => {
+    if (data?.length !== 0) {
+      const event = data?.map((ele) => new Date(ele.attributes.created_at).toLocaleDateString("sv-SE"));
+      return Object.keys(DateCount(event)).map((element) => ({ title: `クイズ${DateCount(event)[element]}問`, start: element, backgroundColor: "#c52f24", borderColor: "#c52f24" }));
+    }
+  };
+
+  const studyEvent = (typing: any, quiz: any) => {
+    if (typing === undefined && quiz === undefined) {
+      return [];
+    } else if (typing === undefined && quiz?.length !== 0) {
+      return quiz;
+    } else if (typing?.length !== 0 && quiz === undefined) {
+      return typing;
+    } else {
+      return quiz?.length && typing?.concat(quiz);
     }
   };
 
@@ -60,7 +80,7 @@ export const StudyCalendar: FC<Props> = memo((props) => {
           initialView="listDay"
           locales={allLocales}
           locale="ja"
-          events={typingEvent(typingResult?.typing)}
+          events={studyEvent(typingEvent(typingResult?.typing), quizEvent(typingResult?.quiz))}
           businessHours={{ daysOfWeek: [1, 2, 3, 4, 5] }}
           displayEventTime={false}
         />
@@ -74,7 +94,7 @@ export const StudyCalendar: FC<Props> = memo((props) => {
           initialView="dayGridMonth"
           locales={allLocales}
           locale="ja"
-          events={typingEvent(typingResult?.typing)}
+          events={studyEvent(typingEvent(typingResult?.typing), quizEvent(typingResult?.quiz))}
           businessHours={{ daysOfWeek: [1, 2, 3, 4, 5] }}
           displayEventTime={false}
         />
