@@ -1,12 +1,13 @@
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { tableCellClasses } from "@mui/material/TableCell";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { FC, memo, useEffect } from "react";
-import { fetchtTypingResultSelector, typingResultState } from "../../../store/typingInfoState";
-import { useParams } from "react-router-dom";
+import { FC, memo } from "react";
 import { styled } from "@mui/material/styles";
 import { LineChart } from "./LineChart";
-import { useApi } from "../../../hooks/useApi";
+import { StudyRecord } from "../../../types/api/studyRecord";
+
+type Props = {
+  typingResult: StudyRecord;
+};
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -18,36 +19,16 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-const divStyle: React.CSSProperties = {
-  marginLeft: "auto",
-  marginRight: "auto",
-  margin: "10px",
-  width: "100%",
-  height: "300px",
-};
-
-export const TypingRecord: FC = memo(() => {
-  const { id } = useParams();
-  const fetchTyping = useRecoilValue(fetchtTypingResultSelector(id as string));
-  const [typingResult, setTypingResult] = useRecoilState(typingResultState(id as string));
-
-  const refreshData = async () => {
-    try {
-      const newData = await useApi.get(`/users/${id}/study_records`);
-      setTypingResult(newData.data);
-    } catch (error) {
-      console.error("Error refreshing data:", error);
-    }
-  };
-  useEffect(() => {
-    setTypingResult(fetchTyping);
-    refreshData();
-  }, [fetchTyping, setTypingResult]);
+export const TypingRecord: FC<Props> = memo((props) => {
+  const { typingResult } = props;
 
   return (
     <>
       {typingResult.typing?.length === 0 ? (
-        <Typography>タイピング実績がありません</Typography>
+        <>
+          <Box minWidth="600px"></Box>
+          <Typography textAlign="center">タイピング実績がありません</Typography>
+        </>
       ) : (
         <>
           <Box
