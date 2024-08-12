@@ -1,4 +1,4 @@
-import { FC, memo, useState } from "react";
+import { FC, memo, useRef, useState } from "react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -15,8 +15,8 @@ import { useRecoilValue } from "recoil";
 import { userIdState } from "../../store/userIdState";
 
 export const UserMenu: FC = memo(() => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
+  const anchorEl = useRef<HTMLButtonElement>(null);
+  const [open, setOpen] = useState<boolean>(false);
   const [, , removeCookie] = useCookies(["accesstoken"]);
   const userId = useRecoilValue(userIdState);
 
@@ -24,15 +24,14 @@ export const UserMenu: FC = memo(() => {
   const setFlash = useSetRecoilState(flashState);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+    setOpen(!open);
   };
   const handleClose = () => {
-    setAnchorEl(null);
+    setOpen(false);
   };
   const LogoutHandler = async () => {
     await useApi.post("/logout");
     removeCookie("accesstoken");
-    setAnchorEl(null);
     setFlash(true);
     navigate("/");
     setTimeout(() => setFlash(false), 1000);
@@ -40,15 +39,16 @@ export const UserMenu: FC = memo(() => {
 
   return (
     <>
-      <Button id="basic-button" aria-controls={open ? "basic-menu" : undefined} aria-haspopup="true" aria-expanded={open ? "true" : undefined} onClick={handleClick}>
+      <Button id="basic-button" ref={anchorEl} onClick={handleClick}>
         <PersonIcon />
         <p style={{ paddingLeft: "8px" }}>ユーザー</p>
         <ArrowDropDownIcon />
       </Button>
       <Menu
         id="basic-menu"
-        anchorEl={anchorEl}
+        anchorEl={anchorEl.current}
         open={open}
+        onClick={handleClose}
         MenuListProps={{
           "aria-labelledby": "basic-button",
         }}
