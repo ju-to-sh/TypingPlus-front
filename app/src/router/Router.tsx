@@ -20,6 +20,7 @@ import { Like } from "../components/pages/Like";
 import { PasswordReset } from "../components/pages/PasswordReset";
 import { ChangePassword } from "../components/pages/ChangePassword";
 import { StudyRecord } from "../components/pages/StudyRecord";
+import { TopLayout } from "../components/template/TopLayout";
 
 export const Router = memo(() => {
   return (
@@ -28,9 +29,9 @@ export const Router = memo(() => {
         <Route
           path="/"
           element={
-            <DefaultLayout>
+            <TopLayout>
               <Top />
-            </DefaultLayout>
+            </TopLayout>
           }
         />
         <Route

@@ -22,6 +22,7 @@ export const DrawerUserMenu: FC = memo(() => {
   const LogoutHandler = async () => {
     await useApi.post("/logout");
     removeCookie("accesstoken");
+    setFlash(true);
     navigate("/");
     setTimeout(() => setFlash(false), 1000);
   };
