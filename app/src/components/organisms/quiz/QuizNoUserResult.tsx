@@ -4,6 +4,8 @@ import { useRecoilValue } from "recoil";
 import { Link as RouterLink, useParams } from "react-router-dom";
 import { QuizChoiceAttributes, QuizResultAttributes } from "../../../types/api/quiz";
 import { QuizState } from "../../../store/quizState";
+import CheckIcon from "@mui/icons-material/Check";
+import PanoramaFishEyeIcon from "@mui/icons-material/PanoramaFishEye";
 
 export const QuizNoUserResult: FC = memo(() => {
   const { id } = useParams<string>();
@@ -22,7 +24,7 @@ export const QuizNoUserResult: FC = memo(() => {
 
   return (
     <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", overflow: "scroll", position: "relative" }}>
-      <Grid container direction="row" sx={{ minWidth: 600, maxWidth: 1000 }} margin="0 auto" justifyContent="center" alignItems="center" p={3}>
+      <Grid container direction="row" sx={{ minWidth: 360, maxWidth: 1000 }} margin="0 auto" justifyContent="center" alignItems="center" p={3}>
         <Grid item xs={12} textAlign="center" mb="20px">
           <Typography variant="h5" gutterBottom>
             クイズ結果
@@ -39,7 +41,13 @@ export const QuizNoUserResult: FC = memo(() => {
                   <Typography variant="body1">問題{index + 1}.</Typography>
                   <ListItemText primary={quizzes[index].attributes.content} />
                   <Typography variant="body1">{`正解 : ${GetCorrectAnswer(quizzes[index].attributes.quiz_choices)?.content}`}</Typography>
-                  <Typography variant="body1">{`ユーザーの回答 : ${GetUserAnswer(quizzes[index].attributes.quiz_choices, result.select_answer)}`}</Typography>
+                  <Box display="flex" alignItems="center">
+                    <Typography pr={1} variant="body1">
+                      ユーザーの回答 :{" "}
+                    </Typography>
+                    {JudgeArray[index] ? <PanoramaFishEyeIcon sx={{ color: "green" }} /> : <CheckIcon sx={{ color: "#c52f24" }} />}
+                    <Typography pl={1} variant="body1">{`${GetUserAnswer(quizzes[index].attributes.quiz_choices, result.select_answer)}`}</Typography>
+                  </Box>
                 </ListItem>
               ))}
             </List>
