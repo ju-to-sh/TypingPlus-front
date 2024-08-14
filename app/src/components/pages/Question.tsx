@@ -33,8 +33,8 @@ export const Question: FC = memo(() => {
   };
 
   return (
-    <Box sx={{ display: "flex", alignItems: "center", height: "100vh" }}>
-      <Grid container direction="row" sx={{ minWidth: 600, maxWidth: 1000 }} margin="0 auto" justifyContent="center" alignItems="center" p={3}>
+    <Box sx={{ display: "flex", alignItems: "center", minHeight: "650px" }} height="100vh">
+      <Grid container direction="row" sx={{ minWidth: 360, maxWidth: 1000 }} margin="0 auto" justifyContent="center" alignItems="center" p={3}>
         <Grid item xs={8} textAlign="center" mb={5}>
           <LinearStepper />
         </Grid>
@@ -50,13 +50,15 @@ export const Question: FC = memo(() => {
                   sx={{
                     backgroundColor: "#eee",
                     pr: "15px",
+                    mr: 0,
                     "&:hover": {
                       backgroundColor: "#F1938C",
                     },
                     mb: "10px",
+                    textAlign: "left",
                   }}
                   value={index}
-                  control={<Radio sx={{ pl: "15px" }} onClick={SelectAnswer} />}
+                  control={<Radio onClick={SelectAnswer} />}
                   label={choice.content}
                 />
               ))}
