@@ -34,7 +34,7 @@ export const TypingRecord: FC<Props> = memo((props) => {
           <Box
             sx={{
               width: {
-                xs: "400px",
+                xs: "330px",
                 sm: "500px",
                 md: "800px",
               },
@@ -45,7 +45,7 @@ export const TypingRecord: FC<Props> = memo((props) => {
             <LineChart data={typingResult.typing} />
           </Box>
           <TableContainer sx={{ display: "flex", justifyContent: "center" }}>
-            <Table sx={{ minWidth: 360, maxWidth: 500 }} aria-label="spanning table">
+            <Table sx={{ minWidth: 300, maxWidth: 500 }} aria-label="spanning table">
               <TableHead>
                 <TableRow>
                   <TableCell align="center" colSpan={3}>
