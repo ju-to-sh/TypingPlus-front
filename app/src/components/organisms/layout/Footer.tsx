@@ -16,7 +16,9 @@ export const Footer: FC = memo(() => {
           </Link>
         </Stack>
         <Box width="100%" display="flex" justifyContent="center">
-          <Typography color="#c52f24">Copyright © 2024 Typing Plus All Rights Reserved.</Typography>
+          <Typography sx={{ fontSize: { xs: "14px", sm: "14px", md: "16px" } }} color="#c52f24">
+            Copyright © 2024 Typing Plus All Rights Reserved.
+          </Typography>
         </Box>
       </Stack>
     </Box>
