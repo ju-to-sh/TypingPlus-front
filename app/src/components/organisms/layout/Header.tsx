@@ -18,7 +18,7 @@ type Props = {
 };
 
 export const Header: FC<Props> = memo((props) => {
-  const drawerWidth = 240;
+  const drawerWidth = 200;
   const [cookie] = useCookies(["accesstoken"]);
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -31,19 +31,19 @@ export const Header: FC<Props> = memo((props) => {
     <Box onClick={handleDrawerToggle} sx={{ alignItems: "center" }}>
       <List sx={{ paddingTop: "24px" }}>
         <ListItem disablePadding>
-          <ListItemButton sx={{ display: "flex", justifyContent: "center", alignItems: "center" }} component={RouterLink} to="/games">
+          <ListItemButton sx={{ display: "flex", justifyContent: "left", alignItems: "center" }} component={RouterLink} to="/games">
             <VideogameAssetIcon sx={{ marginRight: "8px", color: "#c52f24" }} />
             <Link underline="none">ゲーム選択</Link>
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton sx={{ display: "flex", justifyContent: "center", alignItems: "center" }} component={RouterLink} to="/ranking">
+          <ListItemButton sx={{ display: "flex", justifyContent: "left", alignItems: "center" }} component={RouterLink} to="/ranking">
             <EmojiEventsIcon sx={{ marginRight: "8px", color: "#c52f24" }} />
             <Link underline="none">ランキング一覧</Link>
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton sx={{ display: "flex", justifyContent: "center", alignItems: "center" }} component={RouterLink} to="/search">
+          <ListItemButton sx={{ display: "flex", justifyContent: "left", alignItems: "center" }} component={RouterLink} to="/search">
             <SearchIcon sx={{ marginRight: "8px", color: "#c52f24" }} />
             <Link underline="none">問題検索</Link>
           </ListItemButton>
@@ -51,7 +51,7 @@ export const Header: FC<Props> = memo((props) => {
         {cookie.accesstoken ? (
           <>
             <ListItem disablePadding>
-              <ListItemButton sx={{ display: "flex", justifyContent: "center", alignItems: "center" }} component={RouterLink} to="/likes">
+              <ListItemButton sx={{ display: "flex", justifyContent: "left", alignItems: "center" }} component={RouterLink} to="/likes">
                 <ThumbUpIcon sx={{ marginRight: "8px", color: "#c52f24" }} />
                 <Link underline="none">お気に入り</Link>
               </ListItemButton>
@@ -61,13 +61,13 @@ export const Header: FC<Props> = memo((props) => {
         ) : (
           <>
             <ListItem disablePadding>
-              <ListItemButton sx={{ display: "flex", justifyContent: "center", alignItems: "center" }} component={RouterLink} to="/signup">
+              <ListItemButton sx={{ display: "flex", justifyContent: "left", alignItems: "center" }} component={RouterLink} to="/signup">
                 <SaveAsIcon sx={{ marginRight: "8px", color: "#c52f24" }} />
                 <Link underline="none">新規登録</Link>
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton sx={{ display: "flex", justifyContent: "center", alignItems: "center" }} component={RouterLink} to="/login">
+              <ListItemButton sx={{ display: "flex", justifyContent: "left", alignItems: "center" }} component={RouterLink} to="/login">
                 <LoginIcon sx={{ marginRight: "8px", color: "#c52f24" }} />
                 <Link underline="none">ログイン</Link>
               </ListItemButton>
