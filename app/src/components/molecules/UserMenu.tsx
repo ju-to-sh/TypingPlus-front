@@ -37,17 +37,18 @@ export const UserMenu: FC = memo(() => {
 
   return (
     <>
-      <Button id="basic-button" ref={anchorEl} onClick={handleClick}>
+      <Button id="basic-user-button" ref={anchorEl} onClick={handleClick}>
         <PersonIcon />
         <p style={{ paddingLeft: "8px" }}>ユーザー</p>
         <ArrowDropDownIcon />
       </Button>
-      <Menu id="basic-menu" anchorEl={anchorEl.current} open={open} onClick={handleClose}>
+      <Menu id="basic-user-menu" anchorEl={anchorEl.current} open={open} onClick={handleClose}>
         <MenuItem
           onClick={() => {
             handleClose();
             navigate(`/users/${userId}`);
           }}
+          sx={{ color: "#c52f24" }}
         >
           マイページ
         </MenuItem>
@@ -58,10 +59,13 @@ export const UserMenu: FC = memo(() => {
               navigate(`/users/${userId}/study_records`);
             }, 0);
           }}
+          sx={{ color: "#c52f24" }}
         >
           学習記録
         </MenuItem>
-        <MenuItem onClick={LogoutHandler}>ログアウト</MenuItem>
+        <MenuItem onClick={LogoutHandler} sx={{ color: "#c52f24" }}>
+          ログアウト
+        </MenuItem>
       </Menu>
     </>
   );
