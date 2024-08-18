@@ -30,19 +30,19 @@ export const DrawerUserMenu: FC = memo(() => {
   return (
     <>
       <ListItem disablePadding>
-        <ListItemButton sx={{ display: "flex", justifyContent: "center", alignItems: "center" }} component={RouterLink} to={`/users/${userId}`}>
+        <ListItemButton sx={{ display: "flex", justifyContent: "left", alignItems: "center" }} component={RouterLink} to={`/users/${userId}`}>
           <ManageAccountsIcon sx={{ marginRight: "8px", color: "#c52f24" }} />
           <Link underline="none">マイページ</Link>
         </ListItemButton>
       </ListItem>
       <ListItem disablePadding>
-        <ListItemButton sx={{ display: "flex", justifyContent: "center", alignItems: "center" }} component={RouterLink} to={`/users/${userId}/study_records`}>
+        <ListItemButton sx={{ display: "flex", justifyContent: "left", alignItems: "center" }} component={RouterLink} to={`/users/${userId}/study_records`}>
           <AutoGraphIcon sx={{ marginRight: "8px", color: "#c52f24" }} />
           <Link underline="none">学習記録</Link>
         </ListItemButton>
       </ListItem>
       <ListItem disablePadding>
-        <ListItemButton sx={{ display: "flex", justifyContent: "center", alignItems: "center" }} onClick={LogoutHandler}>
+        <ListItemButton sx={{ display: "flex", justifyContent: "left", alignItems: "center" }} onClick={LogoutHandler}>
           <LogoutIcon sx={{ marginRight: "8px", color: "#c52f24" }} />
           <Link underline="none">ログアウト</Link>
         </ListItemButton>

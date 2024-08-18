@@ -4,8 +4,6 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import PersonIcon from "@mui/icons-material/Person";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { Link as RouterLink } from "react-router-dom";
-import { Link } from "@mui/material";
 import { useCookies } from "react-cookie";
 import { useApi } from "../../hooks/useApi";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +21,7 @@ export const UserMenu: FC = memo(() => {
   const navigate = useNavigate();
   const setFlash = useSetRecoilState(flashState);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = () => {
     setOpen(!open);
   };
   const handleClose = () => {
@@ -39,31 +37,35 @@ export const UserMenu: FC = memo(() => {
 
   return (
     <>
-      <Button id="basic-button" ref={anchorEl} onClick={handleClick}>
+      <Button id="basic-user-button" ref={anchorEl} onClick={handleClick}>
         <PersonIcon />
         <p style={{ paddingLeft: "8px" }}>ユーザー</p>
         <ArrowDropDownIcon />
       </Button>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl.current}
-        open={open}
-        onClick={handleClose}
-        MenuListProps={{
-          "aria-labelledby": "basic-button",
-        }}
-      >
-        <MenuItem onClick={handleClose}>
-          <Link component={RouterLink} to={`/users/${userId}`} underline="none" color="#333">
-            マイページ
-          </Link>
+      <Menu id="basic-user-menu" anchorEl={anchorEl.current} open={open} onClick={handleClose}>
+        <MenuItem
+          onClick={() => {
+            handleClose();
+            navigate(`/users/${userId}`);
+          }}
+          sx={{ color: "#c52f24" }}
+        >
+          マイページ
         </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Link component={RouterLink} to={`/users/${userId}/study_records`} underline="none" color="#333">
-            学習記録
-          </Link>
+        <MenuItem
+          onClick={() => {
+            handleClose();
+            setTimeout(() => {
+              navigate(`/users/${userId}/study_records`);
+            }, 0);
+          }}
+          sx={{ color: "#c52f24" }}
+        >
+          学習記録
         </MenuItem>
-        <MenuItem onClick={LogoutHandler}>ログアウト</MenuItem>
+        <MenuItem onClick={LogoutHandler} sx={{ color: "#c52f24" }}>
+          ログアウト
+        </MenuItem>
       </Menu>
     </>
   );
