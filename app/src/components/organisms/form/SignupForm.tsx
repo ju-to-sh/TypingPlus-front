@@ -79,8 +79,16 @@ export const SignupForm: FC = memo(() => {
           })}
           margin="dense"
         />
-        <TextField fullWidth required label="パスワード" type="password" {...register("password", { required: "パスワードを入力して下さい" })} margin="dense" />
-        <TextField fullWidth required label="パスワード(確認)" type="password" {...register("passwordConfirmation", { required: "パスワードをもう一度入力して下さい" })} margin="dense" />
+        <TextField
+          fullWidth
+          required
+          label="パスワード"
+          type="password"
+          {...register("password", { required: "パスワードを入力して下さい" })}
+          margin="dense"
+          inputProps={{ "data-testid": "password" }}
+        />
+        <TextField fullWidth required label="パスワード(確認)" type="password" {...register("passwordConfirmation", { required: "パスワードをもう一度入力して下さい" })} margin="dense" inputProps={{ "data-testid": "password-confirmation" }} />
         <Box mt={3}></Box>
         <Grid container justifyContent="center" columnSpacing={2}>
           <Grid item>
