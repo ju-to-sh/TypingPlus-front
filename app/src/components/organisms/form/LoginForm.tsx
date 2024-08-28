@@ -74,6 +74,7 @@ export const LoginForm: FC = memo(() => {
             },
           })}
           margin="dense"
+          inputProps={{ "data-testid": "password" }}
         />
         <TextField id="password" fullWidth required label="パスワード" type="password" {...register("password", { required: "パスワードを入力して下さい" })} margin="dense" />
         <Link component={RouterLink} to="/password_resets" underline="hover">

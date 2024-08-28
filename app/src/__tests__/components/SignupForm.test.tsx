@@ -4,13 +4,6 @@ import { BrowserRouter } from "react-router-dom";
 import { SignupForm } from "../../components/organisms/form/SignupForm";
 import userEvent from "@testing-library/user-event";
 
-const mockedNavigator = jest.fn();
-    jest.mock('react-router-dom', () => ({
-        ...jest.requireActual('react-router-dom'),
-        useNavigate: () => mockedNavigator,
-    }
-));
-
 describe("SignupForm", () => {
   it("renders correctly", () => {
     render(<SignupForm />, { wrapper: BrowserRouter });
