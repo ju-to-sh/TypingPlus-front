@@ -7,7 +7,6 @@ import { useApi } from "../../../hooks/useApi";
 import { useCookies } from "react-cookie";
 import { useSetRecoilState } from "recoil";
 import { flashState } from "../../../store/flashState";
-import { userIdState } from "../../../store/userIdState";
 
 type Inputs = {
   email: string;
@@ -17,7 +16,6 @@ type Inputs = {
 export const LoginForm: FC = memo(() => {
   const [cookie, setCookie] = useCookies<string>(["accesstoken"]);
   const [loginFlag, setLoginFlag] = useState(false);
-  const setUserId = useSetRecoilState(userIdState);
   const {
     register,
     handleSubmit,
@@ -34,7 +32,7 @@ export const LoginForm: FC = memo(() => {
         const accessToken = res.headers["accesstoken"];
         if (accessToken) {
           setCookie("accesstoken", accessToken);
-          setUserId(res.data.data.id);
+          window.localStorage.setItem("user_id", res.data.data.id);
           reset();
           setFlash(true);
           navigate("/games");
