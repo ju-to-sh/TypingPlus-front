@@ -6,15 +6,13 @@ import { useApi } from "../../hooks/useApi";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { flashState } from "../../store/flashState";
-import { useRecoilValue } from "recoil";
-import { userIdState } from "../../store/userIdState";
 import LogoutIcon from "@mui/icons-material/Logout";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 
 export const DrawerUserMenu: FC = memo(() => {
   const [, , removeCookie] = useCookies(["accesstoken"]);
-  const userId = useRecoilValue(userIdState);
+  const userId = window.localStorage.getItem("user_id");
 
   const navigate = useNavigate();
   const setFlash = useSetRecoilState(flashState);
@@ -22,6 +20,7 @@ export const DrawerUserMenu: FC = memo(() => {
   const LogoutHandler = async () => {
     await useApi.post("/logout");
     removeCookie("accesstoken");
+    window.localStorage.removeItem("user_id");
     setFlash(true);
     navigate("/");
     setTimeout(() => setFlash(false), 1000);

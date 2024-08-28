@@ -9,14 +9,12 @@ import { useApi } from "../../hooks/useApi";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { flashState } from "../../store/flashState";
-import { useRecoilValue } from "recoil";
-import { userIdState } from "../../store/userIdState";
 
 export const UserMenu: FC = memo(() => {
   const anchorEl = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState<boolean>(false);
   const [, , removeCookie] = useCookies(["accesstoken"]);
-  const userId = useRecoilValue(userIdState);
+  const userId = window.localStorage.getItem("user_id");
 
   const navigate = useNavigate();
   const setFlash = useSetRecoilState(flashState);
@@ -30,6 +28,7 @@ export const UserMenu: FC = memo(() => {
   const LogoutHandler = async () => {
     await useApi.post("/logout");
     removeCookie("accesstoken");
+    window.localStorage.removeItem("user_id");
     setFlash(true);
     navigate("/");
     setTimeout(() => setFlash(false), 1000);
